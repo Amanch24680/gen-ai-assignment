@@ -10,7 +10,7 @@ def test_frontend_root_endpoint():
     response = client.get("/")
     assert response.status_code == 200
     assert "text/html" in response.headers["content-type"]
-    assert "Cost-Efficient RAG Application" in response.text
+    assert "Cost-Efficient RAG Assistant" in response.text
     assert "chat-form" in response.text
 
 
