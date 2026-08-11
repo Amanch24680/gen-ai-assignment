@@ -38,7 +38,16 @@ def test_retrieval_evaluator_workflow_mocked():
     q001_res = next(r for r in summary.per_question_results if r.question_id == "q001")
     assert q001_res.recall_at_1 == 1.0
     assert q001_res.precision_at_1 == 1.0
+    assert q001_res.hit_rate_at_1 == 1.0
+    assert q001_res.ndcg_at_1 == 1.0
     assert q001_res.reciprocal_rank == 1.0
+    assert q001_res.retrieval_latency_ms >= 0.0
+
+    # Verify summary fields
+    assert summary.hit_rate_at_1 >= 0.0
+    assert summary.ndcg_at_1 >= 0.0
+    assert summary.p50_retrieval_latency_ms >= 0.0
+    assert summary.p95_retrieval_latency_ms >= 0.0
 
     # Verify unanswerable metrics
     assert summary.unanswerable_empty_retrieval_count >= 0

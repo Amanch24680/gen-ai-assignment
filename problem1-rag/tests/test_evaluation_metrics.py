@@ -1,6 +1,8 @@
 import pytest
 from evaluation.metrics import (
+    hit_rate_at_k,
     mean_reciprocal_rank,
+    ndcg_at_k,
     precision_at_k,
     recall_at_k,
     reciprocal_rank,
@@ -42,11 +44,9 @@ def test_precision_at_k_normal_and_fewer_results():
     assert precision_at_k(["c1", "x"], rel, 2) == 0.5
 
     # Fewer than K results returned (1 result returned when k=3, 1 relevant)
-    # Effective denominator = 1 -> 1/1 = 1.0
     assert precision_at_k(["c1"], rel, 3) == 1.0
 
     # Fewer than K results returned (1 result returned when k=3, 0 relevant)
-    # Effective denominator = 1 -> 0/1 = 0.0
     assert precision_at_k(["x"], rel, 3) == 0.0
 
     # Zero results returned -> 0.0
@@ -54,6 +54,42 @@ def test_precision_at_k_normal_and_fewer_results():
 
     # Invalid k <= 0
     assert precision_at_k(["c1"], rel, 0) == 0.0
+
+
+def test_hit_rate_at_k():
+    rel = ["c1", "c2"]
+
+    # Hit in top 1
+    assert hit_rate_at_k(["c1", "x", "y"], rel, 1) == 1.0
+
+    # Hit in top 3 (c2 at rank 3)
+    assert hit_rate_at_k(["x", "y", "c2"], rel, 3) == 1.0
+
+    # Miss in top 2 (c2 at rank 3)
+    assert hit_rate_at_k(["x", "y", "c2"], rel, 2) == 0.0
+
+    # Edge cases
+    assert hit_rate_at_k([], rel, 3) == 0.0
+    assert hit_rate_at_k(["c1"], [], 3) == 0.0
+    assert hit_rate_at_k(["c1"], rel, 0) == 0.0
+
+
+def test_ndcg_at_k():
+    rel = ["c1", "c2"]
+
+    # Ideal ranking: c1 at 1, c2 at 2 -> nDCG@2 = 1.0
+    assert ndcg_at_k(["c1", "c2", "x"], rel, 2) == 1.0
+
+    # Relevant at rank 1 only -> DCG@2 = 1/log2(2) = 1.0, IDCG@2 = 1/log2(2) + 1/log2(3) = 1.6309 -> nDCG@2 = 1/1.6309 = 0.6131
+    assert ndcg_at_k(["c1", "x"], rel, 2) == round(1.0 / (1.0 + 1.0 / 1.58496), 4)
+
+    # Relevant at rank 2 only -> DCG@2 = 1/log2(3) = 0.6309 -> nDCG@2 = (1/1.58496) / 1.6309 = 0.3869
+    assert ndcg_at_k(["x", "c1"], rel, 2) == round((1.0 / 1.58496) / (1.0 + 1.0 / 1.58496), 4)
+
+    # Edge cases
+    assert ndcg_at_k([], rel, 3) == 0.0
+    assert ndcg_at_k(["c1"], [], 3) == 0.0
+    assert ndcg_at_k(["c1"], rel, 0) == 0.0
 
 
 def test_reciprocal_rank_ranks():

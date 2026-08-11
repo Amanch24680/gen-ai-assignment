@@ -1,3 +1,4 @@
+import math
 import re
 from collections import Counter
 from typing import Any, List, Optional, Set
@@ -17,7 +18,6 @@ def normalize_text(text: str, remove_stopwords: bool = True) -> List[str]:
     """
     if not text:
         return []
-    # Lowercase & strip punctuation using regex
     clean_str = re.sub(r"[^\w\s]", " ", text.lower())
     tokens = [t.strip() for t in clean_str.split() if t.strip()]
     if remove_stopwords:
@@ -57,6 +57,48 @@ def precision_at_k(retrieved_chunk_ids: List[str], relevant_chunk_ids: List[str]
     effective_denominator = len(top_k_retrieved) if len(top_k_retrieved) < k else k
     hits = len(set(top_k_retrieved) & set(relevant_chunk_ids))
     return hits / effective_denominator
+
+
+def hit_rate_at_k(retrieved_chunk_ids: List[str], relevant_chunk_ids: List[str], k: int) -> float:
+    """
+    Calculate Hit Rate@K (Binary Hit / Miss):
+    1.0 if at least one relevant chunk is retrieved in top K, else 0.0.
+    Returns 0.0 if relevant_chunk_ids is empty or k <= 0.
+    """
+    if not relevant_chunk_ids or k <= 0 or not retrieved_chunk_ids:
+        return 0.0
+
+    top_k_retrieved = set(retrieved_chunk_ids[:k])
+    relevant_set = set(relevant_chunk_ids)
+    return 1.0 if len(top_k_retrieved & relevant_set) > 0 else 0.0
+
+
+def ndcg_at_k(retrieved_chunk_ids: List[str], relevant_chunk_ids: List[str], k: int) -> float:
+    """
+    Calculate Normalized Discounted Cumulative Gain at K (nDCG@K):
+    DCG@K / IDCG@K
+    DCG@K = sum_{i=1}^K (rel_i / log2(i + 1))
+    IDCG@K = sum_{i=1}^{min(K, |relevant|)} (1 / log2(i + 1))
+    Returns 0.0 if relevant_chunk_ids is empty or IDCG@K == 0.
+    """
+    if not relevant_chunk_ids or k <= 0 or not retrieved_chunk_ids:
+        return 0.0
+
+    relevant_set = set(relevant_chunk_ids)
+    top_k_retrieved = retrieved_chunk_ids[:k]
+
+    dcg = 0.0
+    for idx, chunk_id in enumerate(top_k_retrieved, start=1):
+        if chunk_id in relevant_set:
+            dcg += 1.0 / math.log2(idx + 1)
+
+    ideal_hits = min(k, len(relevant_set))
+    idcg = sum(1.0 / math.log2(idx + 1) for idx in range(1, ideal_hits + 1))
+
+    if idcg == 0.0:
+        return 0.0
+
+    return round(dcg / idcg, 4)
 
 
 def reciprocal_rank(retrieved_chunk_ids: List[str], relevant_chunk_ids: List[str]) -> float:

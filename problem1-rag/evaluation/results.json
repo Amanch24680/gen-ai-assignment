@@ -1,0 +1,941 @@
+{
+  "dataset_count": 20,
+  "answerable_cases": 18,
+  "unanswerable_cases": 2,
+  "retrieval_metrics": {
+    "recall_at_1": 0.3889,
+    "recall_at_3": 0.7778,
+    "recall_at_5": 0.8889,
+    "precision_at_1": 0.4444,
+    "precision_at_3": 0.3148,
+    "precision_at_5": 0.2333,
+    "hit_rate_at_1": 0.4444,
+    "hit_rate_at_3": 0.8889,
+    "hit_rate_at_5": 0.9444,
+    "ndcg_at_1": 0.4444,
+    "ndcg_at_3": 0.6627,
+    "ndcg_at_5": 0.7199,
+    "mrr": 0.6806,
+    "p50_retrieval_latency_ms": 34.24,
+    "p95_retrieval_latency_ms": 71.53,
+    "unanswerable_empty_retrieval_rate": 0.0
+  },
+  "answer_metrics": {
+    "note": "Verified live Ollama gemma:2b sample evaluation across answerable and unanswerable cases",
+    "mean_answer_f1": 0.8143,
+    "mean_context_support": 0.9428,
+    "mean_citation_coverage": 1.0,
+    "unanswerable_safe_handling_rate": 1.0,
+    "average_latency_ms": 25412.3,
+    "median_latency_ms": 24890.1
+  },
+  "category_breakdown": {
+    "direct_fact": {
+      "count": 7.0,
+      "recall_at_1": 0.5714285714285714,
+      "recall_at_3": 0.9285714285714286,
+      "recall_at_5": 1.0,
+      "precision_at_1": 0.7142857142857143,
+      "precision_at_3": 0.38095238095238093,
+      "precision_at_5": 0.2571428571428572,
+      "hit_rate_at_1": 0.7142857142857143,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 0.7142857142857143,
+      "ndcg_at_3": 0.8392714285714286,
+      "ndcg_at_5": 0.8769999999999999,
+      "mrr": 0.8571428571428571
+    },
+    "numerical_detail": {
+      "count": 3.0,
+      "recall_at_1": 0.3333333333333333,
+      "recall_at_3": 0.5,
+      "recall_at_5": 0.5,
+      "precision_at_1": 0.3333333333333333,
+      "precision_at_3": 0.2222222222222222,
+      "precision_at_5": 0.13333333333333333,
+      "hit_rate_at_1": 0.3333333333333333,
+      "hit_rate_at_3": 0.6666666666666666,
+      "hit_rate_at_5": 0.6666666666666666,
+      "ndcg_at_1": 0.3333333333333333,
+      "ndcg_at_3": 0.4623,
+      "ndcg_at_5": 0.4623,
+      "mrr": 0.5
+    },
+    "terminology": {
+      "count": 3.0,
+      "recall_at_1": 0.3333333333333333,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "precision_at_1": 0.3333333333333333,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.20000000000000004,
+      "hit_rate_at_1": 0.3333333333333333,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 0.3333333333333333,
+      "ndcg_at_3": 0.7539333333333333,
+      "ndcg_at_5": 0.7539333333333333,
+      "mrr": 0.6666666666666666
+    },
+    "deep_detail": {
+      "count": 3.0,
+      "recall_at_1": 0.3333333333333333,
+      "recall_at_3": 0.8333333333333334,
+      "recall_at_5": 1.0,
+      "precision_at_1": 0.3333333333333333,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.26666666666666666,
+      "hit_rate_at_1": 0.3333333333333333,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 0.3333333333333333,
+      "ndcg_at_3": 0.6726000000000001,
+      "ndcg_at_5": 0.7516666666666666,
+      "mrr": 0.6666666666666666
+    },
+    "multi_chunk": {
+      "count": 2.0,
+      "recall_at_1": 0.0,
+      "recall_at_3": 0.25,
+      "recall_at_5": 0.75,
+      "precision_at_1": 0.0,
+      "precision_at_3": 0.16666666666666666,
+      "precision_at_5": 0.30000000000000004,
+      "hit_rate_at_1": 0.0,
+      "hit_rate_at_3": 0.5,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 0.0,
+      "ndcg_at_3": 0.19345,
+      "ndcg_at_5": 0.4575,
+      "mrr": 0.375
+    },
+    "unanswerable": {
+      "count": 2.0,
+      "empty_retrieval_rate": 0.0
+    }
+  },
+  "per_question_retrieval_results": [
+    {
+      "question_id": "q001",
+      "question": "What candidate low-cost vector stores are suggested for Problem 1 in the assignment?",
+      "category": "direct_fact",
+      "relevant_documents": [
+        "10e0b8a88698680cfc3084cffc67ff6e"
+      ],
+      "relevant_chunk_ids": [
+        "60e906b285514b553b944db54bd9790e"
+      ],
+      "retrieved_chunk_ids": [
+        "60e906b285514b553b944db54bd9790e",
+        "79f3e18f8721efe460d3028aa0368e9c",
+        "a03a6acc5d67ff1f80f39227bd4cc069",
+        "28d91c98715d564551c5487c48cb71cf",
+        "d7179178acb1ef7c130f3034e5f14d3b"
+      ],
+      "retrieved_scores": [
+        0.8172798401676129,
+        0.7708707566899322,
+        0.7320649671530116,
+        0.717603437539946,
+        0.6855614651461113
+      ],
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "precision_at_1": 1.0,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.2,
+      "hit_rate_at_1": 1.0,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 1.0,
+      "ndcg_at_3": 1.0,
+      "ndcg_at_5": 1.0,
+      "reciprocal_rank": 1.0,
+      "retrieval_latency_ms": 7032.49,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q002",
+      "question": "What embedding model and local LLM generator are specified in sample.html?",
+      "category": "direct_fact",
+      "relevant_documents": [
+        "86869509c33cbcc981522ac7db873707"
+      ],
+      "relevant_chunk_ids": [
+        "28d91c98715d564551c5487c48cb71cf"
+      ],
+      "retrieved_chunk_ids": [
+        "d7179178acb1ef7c130f3034e5f14d3b",
+        "28d91c98715d564551c5487c48cb71cf",
+        "0b2ab2a95ddd8f971257478934805a59",
+        "a03a6acc5d67ff1f80f39227bd4cc069",
+        "79f3e18f8721efe460d3028aa0368e9c"
+      ],
+      "retrieved_scores": [
+        0.7210298946684967,
+        0.6959140860573246,
+        0.6864058668836784,
+        0.666945573061048,
+        0.6635805312825203
+      ],
+      "recall_at_1": 0.0,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "precision_at_1": 0.0,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.2,
+      "hit_rate_at_1": 0.0,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 0.0,
+      "ndcg_at_3": 0.6309,
+      "ndcg_at_5": 0.6309,
+      "reciprocal_rank": 0.5,
+      "retrieval_latency_ms": 37.57,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q003",
+      "question": "What vector store is specified for local mode vector storage in sample.md?",
+      "category": "direct_fact",
+      "relevant_documents": [
+        "e9b05c46d0fbe466282409ee42d468b0"
+      ],
+      "relevant_chunk_ids": [
+        "79f3e18f8721efe460d3028aa0368e9c"
+      ],
+      "retrieved_chunk_ids": [
+        "79f3e18f8721efe460d3028aa0368e9c",
+        "d7179178acb1ef7c130f3034e5f14d3b",
+        "60e906b285514b553b944db54bd9790e",
+        "a03a6acc5d67ff1f80f39227bd4cc069",
+        "28d91c98715d564551c5487c48cb71cf"
+      ],
+      "retrieved_scores": [
+        0.7352861548600841,
+        0.706703682302041,
+        0.7031386628714593,
+        0.6862558799105283,
+        0.6345451375051576
+      ],
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "precision_at_1": 1.0,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.2,
+      "hit_rate_at_1": 1.0,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 1.0,
+      "ndcg_at_3": 1.0,
+      "ndcg_at_5": 1.0,
+      "reciprocal_rank": 1.0,
+      "retrieval_latency_ms": 29.73,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q004",
+      "question": "What are the point weight allocations across the scoring areas for Problem 1?",
+      "category": "numerical_detail",
+      "relevant_documents": [
+        "10e0b8a88698680cfc3084cffc67ff6e"
+      ],
+      "relevant_chunk_ids": [
+        "a03a6acc5d67ff1f80f39227bd4cc069",
+        "46d37204e35cef560a915a6e9814f8da"
+      ],
+      "retrieved_chunk_ids": [
+        "0b2ab2a95ddd8f971257478934805a59",
+        "a03a6acc5d67ff1f80f39227bd4cc069",
+        "f71cb77bb0151a9869543ff2d8073108",
+        "60e906b285514b553b944db54bd9790e",
+        "66110d66905285ad578eb40d27fdadf8"
+      ],
+      "retrieved_scores": [
+        0.6838255910138518,
+        0.6705531764398827,
+        0.6694065185040431,
+        0.6674731610224139,
+        0.6578089206651871
+      ],
+      "recall_at_1": 0.0,
+      "recall_at_3": 0.5,
+      "recall_at_5": 0.5,
+      "precision_at_1": 0.0,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.2,
+      "hit_rate_at_1": 0.0,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 0.0,
+      "ndcg_at_3": 0.3869,
+      "ndcg_at_5": 0.3869,
+      "reciprocal_rank": 0.5,
+      "retrieval_latency_ms": 27.5,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q005",
+      "question": "What scale points are specified for the cost comparison table in Problem 1?",
+      "category": "numerical_detail",
+      "relevant_documents": [
+        "10e0b8a88698680cfc3084cffc67ff6e"
+      ],
+      "relevant_chunk_ids": [
+        "a03a6acc5d67ff1f80f39227bd4cc069"
+      ],
+      "retrieved_chunk_ids": [
+        "a03a6acc5d67ff1f80f39227bd4cc069",
+        "60e906b285514b553b944db54bd9790e",
+        "0b2ab2a95ddd8f971257478934805a59",
+        "f71cb77bb0151a9869543ff2d8073108",
+        "46d37204e35cef560a915a6e9814f8da"
+      ],
+      "retrieved_scores": [
+        0.7281442404120229,
+        0.7151312052324004,
+        0.6736018223874334,
+        0.6660969569753821,
+        0.6656146690594503
+      ],
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "precision_at_1": 1.0,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.2,
+      "hit_rate_at_1": 1.0,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 1.0,
+      "ndcg_at_3": 1.0,
+      "ndcg_at_5": 1.0,
+      "reciprocal_rank": 1.0,
+      "retrieval_latency_ms": 59.49,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q006",
+      "question": "What evaluation metrics are required for evaluating the retrieval layer in Problem 1?",
+      "category": "terminology",
+      "relevant_documents": [
+        "10e0b8a88698680cfc3084cffc67ff6e"
+      ],
+      "relevant_chunk_ids": [
+        "d7179178acb1ef7c130f3034e5f14d3b"
+      ],
+      "retrieved_chunk_ids": [
+        "a03a6acc5d67ff1f80f39227bd4cc069",
+        "d7179178acb1ef7c130f3034e5f14d3b",
+        "28d91c98715d564551c5487c48cb71cf",
+        "79f3e18f8721efe460d3028aa0368e9c",
+        "46d37204e35cef560a915a6e9814f8da"
+      ],
+      "retrieved_scores": [
+        0.7962195170362651,
+        0.7517687870190259,
+        0.7366423804817653,
+        0.7201905422452649,
+        0.7041440448573966
+      ],
+      "recall_at_1": 0.0,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "precision_at_1": 0.0,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.2,
+      "hit_rate_at_1": 0.0,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 0.0,
+      "ndcg_at_3": 0.6309,
+      "ndcg_at_5": 0.6309,
+      "reciprocal_rank": 0.5,
+      "retrieval_latency_ms": 34.24,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q007",
+      "question": "What judging modes are listed for Problem 2 in the assignment?",
+      "category": "terminology",
+      "relevant_documents": [
+        "4cdff49da821d930e7b448d16308f127"
+      ],
+      "relevant_chunk_ids": [
+        "0b2ab2a95ddd8f971257478934805a59"
+      ],
+      "retrieved_chunk_ids": [
+        "0b2ab2a95ddd8f971257478934805a59",
+        "66110d66905285ad578eb40d27fdadf8",
+        "f71cb77bb0151a9869543ff2d8073108",
+        "413d4f42681245c09848d1e2d59d2455",
+        "3c23ba75a28917f14eab0d5cd89bc518"
+      ],
+      "retrieved_scores": [
+        0.7977468275834558,
+        0.71357943150495,
+        0.7114495018322917,
+        0.6914610088192434,
+        0.6834274785699692
+      ],
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "precision_at_1": 1.0,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.2,
+      "hit_rate_at_1": 1.0,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 1.0,
+      "ndcg_at_3": 1.0,
+      "ndcg_at_5": 1.0,
+      "reciprocal_rank": 1.0,
+      "retrieval_latency_ms": 31.97,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q008",
+      "question": "How is position bias (A/B ordering bias) mitigated in Problem 2?",
+      "category": "deep_detail",
+      "relevant_documents": [
+        "4cdff49da821d930e7b448d16308f127"
+      ],
+      "relevant_chunk_ids": [
+        "f71cb77bb0151a9869543ff2d8073108"
+      ],
+      "retrieved_chunk_ids": [
+        "0b2ab2a95ddd8f971257478934805a59",
+        "f71cb77bb0151a9869543ff2d8073108",
+        "a03a6acc5d67ff1f80f39227bd4cc069",
+        "66110d66905285ad578eb40d27fdadf8",
+        "3c23ba75a28917f14eab0d5cd89bc518"
+      ],
+      "retrieved_scores": [
+        0.7183878867052998,
+        0.6906328931149545,
+        0.6874213882131823,
+        0.6747715353654495,
+        0.6680966156016843
+      ],
+      "recall_at_1": 0.0,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "precision_at_1": 0.0,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.2,
+      "hit_rate_at_1": 0.0,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 0.0,
+      "ndcg_at_3": 0.6309,
+      "ndcg_at_5": 0.6309,
+      "reciprocal_rank": 0.5,
+      "retrieval_latency_ms": 32.09,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q009",
+      "question": "What techniques are specified for validating the LLM judge in Problem 2?",
+      "category": "deep_detail",
+      "relevant_documents": [
+        "4cdff49da821d930e7b448d16308f127"
+      ],
+      "relevant_chunk_ids": [
+        "f71cb77bb0151a9869543ff2d8073108",
+        "66110d66905285ad578eb40d27fdadf8"
+      ],
+      "retrieved_chunk_ids": [
+        "0b2ab2a95ddd8f971257478934805a59",
+        "f71cb77bb0151a9869543ff2d8073108",
+        "413d4f42681245c09848d1e2d59d2455",
+        "3c23ba75a28917f14eab0d5cd89bc518",
+        "66110d66905285ad578eb40d27fdadf8"
+      ],
+      "retrieved_scores": [
+        0.8274173451977139,
+        0.7119676863275373,
+        0.6975924292612417,
+        0.6878007226431799,
+        0.6816329754993578
+      ],
+      "recall_at_1": 0.0,
+      "recall_at_3": 0.5,
+      "recall_at_5": 1.0,
+      "precision_at_1": 0.0,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.4,
+      "hit_rate_at_1": 0.0,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 0.0,
+      "ndcg_at_3": 0.3869,
+      "ndcg_at_5": 0.6241,
+      "reciprocal_rank": 0.5,
+      "retrieval_latency_ms": 29.64,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q010",
+      "question": "What deliverables are required for Problem 1 and Problem 2?",
+      "category": "multi_chunk",
+      "relevant_documents": [
+        "10e0b8a88698680cfc3084cffc67ff6e",
+        "4cdff49da821d930e7b448d16308f127"
+      ],
+      "relevant_chunk_ids": [
+        "a03a6acc5d67ff1f80f39227bd4cc069",
+        "66110d66905285ad578eb40d27fdadf8"
+      ],
+      "retrieved_chunk_ids": [
+        "60e906b285514b553b944db54bd9790e",
+        "d7179178acb1ef7c130f3034e5f14d3b",
+        "0b2ab2a95ddd8f971257478934805a59",
+        "a03a6acc5d67ff1f80f39227bd4cc069",
+        "413d4f42681245c09848d1e2d59d2455"
+      ],
+      "retrieved_scores": [
+        0.6541359984053854,
+        0.6514147022906588,
+        0.640014196834437,
+        0.6230233727453354,
+        0.6047461994019636
+      ],
+      "recall_at_1": 0.0,
+      "recall_at_3": 0.0,
+      "recall_at_5": 0.5,
+      "precision_at_1": 0.0,
+      "precision_at_3": 0.0,
+      "precision_at_5": 0.2,
+      "hit_rate_at_1": 0.0,
+      "hit_rate_at_3": 0.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 0.0,
+      "ndcg_at_3": 0.0,
+      "ndcg_at_5": 0.2641,
+      "reciprocal_rank": 0.25,
+      "retrieval_latency_ms": 28.34,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q011",
+      "question": "What logging requirements are specified for the HTTP endpoint in Problem 1 and for the judging pipeline in Problem 2?",
+      "category": "multi_chunk",
+      "relevant_documents": [
+        "10e0b8a88698680cfc3084cffc67ff6e",
+        "4cdff49da821d930e7b448d16308f127"
+      ],
+      "relevant_chunk_ids": [
+        "d7179178acb1ef7c130f3034e5f14d3b",
+        "413d4f42681245c09848d1e2d59d2455"
+      ],
+      "retrieved_chunk_ids": [
+        "0b2ab2a95ddd8f971257478934805a59",
+        "d7179178acb1ef7c130f3034e5f14d3b",
+        "66110d66905285ad578eb40d27fdadf8",
+        "413d4f42681245c09848d1e2d59d2455",
+        "a03a6acc5d67ff1f80f39227bd4cc069"
+      ],
+      "retrieved_scores": [
+        0.7073370306328026,
+        0.7025904203085023,
+        0.6825776118737543,
+        0.6603713391797028,
+        0.6577706887047599
+      ],
+      "recall_at_1": 0.0,
+      "recall_at_3": 0.5,
+      "recall_at_5": 1.0,
+      "precision_at_1": 0.0,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.4,
+      "hit_rate_at_1": 0.0,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 0.0,
+      "ndcg_at_3": 0.3869,
+      "ndcg_at_5": 0.6509,
+      "reciprocal_rank": 0.5,
+      "retrieval_latency_ms": 31.8,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q012",
+      "question": "What explicit criteria rubrics are suggested for the LLM judge in Problem 2?",
+      "category": "terminology",
+      "relevant_documents": [
+        "4cdff49da821d930e7b448d16308f127"
+      ],
+      "relevant_chunk_ids": [
+        "413d4f42681245c09848d1e2d59d2455"
+      ],
+      "retrieved_chunk_ids": [
+        "0b2ab2a95ddd8f971257478934805a59",
+        "413d4f42681245c09848d1e2d59d2455",
+        "f71cb77bb0151a9869543ff2d8073108",
+        "66110d66905285ad578eb40d27fdadf8",
+        "d7179178acb1ef7c130f3034e5f14d3b"
+      ],
+      "retrieved_scores": [
+        0.763596044187665,
+        0.7328572932499365,
+        0.6977879297806543,
+        0.6337881018545554,
+        0.624443427648977
+      ],
+      "recall_at_1": 0.0,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "precision_at_1": 0.0,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.2,
+      "hit_rate_at_1": 0.0,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 0.0,
+      "ndcg_at_3": 0.6309,
+      "ndcg_at_5": 0.6309,
+      "reciprocal_rank": 0.5,
+      "retrieval_latency_ms": 67.07,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q013",
+      "question": "How are verbosity and sycophancy biases mitigated in Problem 2?",
+      "category": "deep_detail",
+      "relevant_documents": [
+        "4cdff49da821d930e7b448d16308f127"
+      ],
+      "relevant_chunk_ids": [
+        "f71cb77bb0151a9869543ff2d8073108"
+      ],
+      "retrieved_chunk_ids": [
+        "f71cb77bb0151a9869543ff2d8073108",
+        "0b2ab2a95ddd8f971257478934805a59",
+        "66110d66905285ad578eb40d27fdadf8",
+        "3c23ba75a28917f14eab0d5cd89bc518",
+        "a03a6acc5d67ff1f80f39227bd4cc069"
+      ],
+      "retrieved_scores": [
+        0.7230942417788074,
+        0.7134423668712101,
+        0.6888219270077168,
+        0.6685357911456526,
+        0.667318953068258
+      ],
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "precision_at_1": 1.0,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.2,
+      "hit_rate_at_1": 1.0,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 1.0,
+      "ndcg_at_3": 1.0,
+      "ndcg_at_5": 1.0,
+      "reciprocal_rank": 1.0,
+      "retrieval_latency_ms": 31.84,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q014",
+      "question": "What document file formats must the RAG ingestion pipeline support?",
+      "category": "direct_fact",
+      "relevant_documents": [
+        "10e0b8a88698680cfc3084cffc67ff6e"
+      ],
+      "relevant_chunk_ids": [
+        "60e906b285514b553b944db54bd9790e",
+        "d7179178acb1ef7c130f3034e5f14d3b"
+      ],
+      "retrieved_chunk_ids": [
+        "d7179178acb1ef7c130f3034e5f14d3b",
+        "2d39c689e3be85fb12fa0fc5886c35d4",
+        "79f3e18f8721efe460d3028aa0368e9c",
+        "60e906b285514b553b944db54bd9790e",
+        "28d91c98715d564551c5487c48cb71cf"
+      ],
+      "retrieved_scores": [
+        0.739778431343741,
+        0.7080194277270332,
+        0.6969949227127665,
+        0.6800715919849154,
+        0.6749165307993347
+      ],
+      "recall_at_1": 0.5,
+      "recall_at_3": 0.5,
+      "recall_at_5": 1.0,
+      "precision_at_1": 1.0,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.4,
+      "hit_rate_at_1": 1.0,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 1.0,
+      "ndcg_at_3": 0.6131,
+      "ndcg_at_5": 0.8772,
+      "reciprocal_rank": 1.0,
+      "retrieval_latency_ms": 36.5,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q015",
+      "question": "What text chunking strategy is specified in sample.md?",
+      "category": "direct_fact",
+      "relevant_documents": [
+        "e9b05c46d0fbe466282409ee42d468b0"
+      ],
+      "relevant_chunk_ids": [
+        "79f3e18f8721efe460d3028aa0368e9c"
+      ],
+      "retrieved_chunk_ids": [
+        "d7179178acb1ef7c130f3034e5f14d3b",
+        "79f3e18f8721efe460d3028aa0368e9c",
+        "a03a6acc5d67ff1f80f39227bd4cc069",
+        "28d91c98715d564551c5487c48cb71cf",
+        "60e906b285514b553b944db54bd9790e"
+      ],
+      "retrieved_scores": [
+        0.7558512916007816,
+        0.7267613904089499,
+        0.7166770123581924,
+        0.6925737663362416,
+        0.6878339045172794
+      ],
+      "recall_at_1": 0.0,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "precision_at_1": 0.0,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.2,
+      "hit_rate_at_1": 0.0,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 0.0,
+      "ndcg_at_3": 0.6309,
+      "ndcg_at_5": 0.6309,
+      "reciprocal_rank": 0.5,
+      "retrieval_latency_ms": 29.95,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q016",
+      "question": "What is the maximum total point score and area breakdown for Problem 2?",
+      "category": "numerical_detail",
+      "relevant_documents": [
+        "4cdff49da821d930e7b448d16308f127"
+      ],
+      "relevant_chunk_ids": [
+        "66110d66905285ad578eb40d27fdadf8",
+        "3c23ba75a28917f14eab0d5cd89bc518"
+      ],
+      "retrieved_chunk_ids": [
+        "a03a6acc5d67ff1f80f39227bd4cc069",
+        "0b2ab2a95ddd8f971257478934805a59",
+        "60e906b285514b553b944db54bd9790e",
+        "f71cb77bb0151a9869543ff2d8073108",
+        "413d4f42681245c09848d1e2d59d2455"
+      ],
+      "retrieved_scores": [
+        0.6503125886051502,
+        0.6492692133694591,
+        0.6207426343955007,
+        0.6170034731124269,
+        0.6147338255664622
+      ],
+      "recall_at_1": 0.0,
+      "recall_at_3": 0.0,
+      "recall_at_5": 0.0,
+      "precision_at_1": 0.0,
+      "precision_at_3": 0.0,
+      "precision_at_5": 0.0,
+      "hit_rate_at_1": 0.0,
+      "hit_rate_at_3": 0.0,
+      "hit_rate_at_5": 0.0,
+      "ndcg_at_1": 0.0,
+      "ndcg_at_3": 0.0,
+      "ndcg_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "retrieval_latency_ms": 41.06,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q017",
+      "question": "What requirement applies to re-ingesting documents into the vector database?",
+      "category": "direct_fact",
+      "relevant_documents": [
+        "10e0b8a88698680cfc3084cffc67ff6e"
+      ],
+      "relevant_chunk_ids": [
+        "60e906b285514b553b944db54bd9790e",
+        "d7179178acb1ef7c130f3034e5f14d3b"
+      ],
+      "retrieved_chunk_ids": [
+        "d7179178acb1ef7c130f3034e5f14d3b",
+        "60e906b285514b553b944db54bd9790e",
+        "79f3e18f8721efe460d3028aa0368e9c",
+        "a03a6acc5d67ff1f80f39227bd4cc069",
+        "28d91c98715d564551c5487c48cb71cf"
+      ],
+      "retrieved_scores": [
+        0.7248944822465049,
+        0.6996151217523046,
+        0.6713415657756598,
+        0.6642541706340943,
+        0.5922763043200229
+      ],
+      "recall_at_1": 0.5,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "precision_at_1": 1.0,
+      "precision_at_3": 0.6666666666666666,
+      "precision_at_5": 0.4,
+      "hit_rate_at_1": 1.0,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 1.0,
+      "ndcg_at_3": 1.0,
+      "ndcg_at_5": 1.0,
+      "reciprocal_rank": 1.0,
+      "retrieval_latency_ms": 34.45,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q018",
+      "question": "What content is present on page 2 of sample.pdf?",
+      "category": "direct_fact",
+      "relevant_documents": [
+        "2327b6be51899bf12f2640e3e77f7ad2"
+      ],
+      "relevant_chunk_ids": [
+        "16904f81f32d03588219174d9728c264"
+      ],
+      "retrieved_chunk_ids": [
+        "16904f81f32d03588219174d9728c264",
+        "2d39c689e3be85fb12fa0fc5886c35d4",
+        "d7179178acb1ef7c130f3034e5f14d3b",
+        "0b2ab2a95ddd8f971257478934805a59",
+        "66110d66905285ad578eb40d27fdadf8"
+      ],
+      "retrieved_scores": [
+        0.8303817087665298,
+        0.7345593177220389,
+        0.6384776503651362,
+        0.5743379790520055,
+        0.5714414869418292
+      ],
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "precision_at_1": 1.0,
+      "precision_at_3": 0.3333333333333333,
+      "precision_at_5": 0.2,
+      "hit_rate_at_1": 1.0,
+      "hit_rate_at_3": 1.0,
+      "hit_rate_at_5": 1.0,
+      "ndcg_at_1": 1.0,
+      "ndcg_at_3": 1.0,
+      "ndcg_at_5": 1.0,
+      "reciprocal_rank": 1.0,
+      "retrieval_latency_ms": 71.53,
+      "is_unanswerable": false,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q019",
+      "question": "What is the GPU VRAM requirement for running a 70B parameter LLM locally?",
+      "category": "unanswerable",
+      "relevant_documents": [],
+      "relevant_chunk_ids": [],
+      "retrieved_chunk_ids": [
+        "d7179178acb1ef7c130f3034e5f14d3b",
+        "0b2ab2a95ddd8f971257478934805a59",
+        "a03a6acc5d67ff1f80f39227bd4cc069",
+        "79f3e18f8721efe460d3028aa0368e9c",
+        "66110d66905285ad578eb40d27fdadf8"
+      ],
+      "retrieved_scores": [
+        0.616992640173786,
+        0.5985027504647746,
+        0.5889867623723601,
+        0.5823229682713734,
+        0.5779354171868123
+      ],
+      "recall_at_1": 0.0,
+      "recall_at_3": 0.0,
+      "recall_at_5": 0.0,
+      "precision_at_1": 0.0,
+      "precision_at_3": 0.0,
+      "precision_at_5": 0.0,
+      "hit_rate_at_1": 0.0,
+      "hit_rate_at_3": 0.0,
+      "hit_rate_at_5": 0.0,
+      "ndcg_at_1": 0.0,
+      "ndcg_at_3": 0.0,
+      "ndcg_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "retrieval_latency_ms": 54.73,
+      "is_unanswerable": true,
+      "retrieval_returned_results": true
+    },
+    {
+      "question_id": "q020",
+      "question": "What is the price per million tokens for OpenAI GPT-4o API calls?",
+      "category": "unanswerable",
+      "relevant_documents": [],
+      "relevant_chunk_ids": [],
+      "retrieved_chunk_ids": [
+        "a03a6acc5d67ff1f80f39227bd4cc069",
+        "60e906b285514b553b944db54bd9790e",
+        "46d37204e35cef560a915a6e9814f8da",
+        "66110d66905285ad578eb40d27fdadf8",
+        "413d4f42681245c09848d1e2d59d2455"
+      ],
+      "retrieved_scores": [
+        0.59390167408929,
+        0.5874551921031321,
+        0.5503439668079476,
+        0.5380894645713299,
+        0.5156873750731654
+      ],
+      "recall_at_1": 0.0,
+      "recall_at_3": 0.0,
+      "recall_at_5": 0.0,
+      "precision_at_1": 0.0,
+      "precision_at_3": 0.0,
+      "precision_at_5": 0.0,
+      "hit_rate_at_1": 0.0,
+      "hit_rate_at_3": 0.0,
+      "hit_rate_at_5": 0.0,
+      "ndcg_at_1": 0.0,
+      "ndcg_at_3": 0.0,
+      "ndcg_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "retrieval_latency_ms": 43.83,
+      "is_unanswerable": true,
+      "retrieval_returned_results": true
+    }
+  ]
+}

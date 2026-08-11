@@ -35,7 +35,9 @@ def test_cli_rag_mode_execution_mocked(tmp_path, capsys):
     )
 
     assert result == 0
-    mock_evaluator.evaluate.assert_called_once_with(top_k=5, relevance_threshold=None, limit=5)
+    mock_evaluator.evaluate.assert_called_once_with(
+        top_k=5, relevance_threshold=None, limit=5, case_ids=None
+    )
 
     captured = capsys.readouterr()
     assert "RAG ANSWER EVALUATION" in captured.out
