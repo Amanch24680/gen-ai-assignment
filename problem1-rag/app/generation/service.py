@@ -117,6 +117,9 @@ class OllamaGenerator(BaseGenerator):
                 retrieved_chunk_count=0,
                 has_relevant_context=False,
                 latency_ms=round(elapsed_ms, 2),
+                prompt_tokens=None,
+                completion_tokens=None,
+                total_tokens=None,
             )
 
         # 2. Build citations
@@ -185,6 +188,13 @@ class OllamaGenerator(BaseGenerator):
         if not answer_text:
             raise EmptyGenerationError("Ollama API returned an empty or whitespace-only answer string.")
 
+        # Extract token usage counts if returned by Ollama API
+        prompt_tokens = data.get("prompt_eval_count")
+        completion_tokens = data.get("eval_count")
+        total_tokens = None
+        if isinstance(prompt_tokens, int) and isinstance(completion_tokens, int):
+            total_tokens = prompt_tokens + completion_tokens
+
         elapsed_ms = (time.perf_counter() - start_time) * 1000.0
 
         return RAGQueryResponse(
@@ -194,4 +204,7 @@ class OllamaGenerator(BaseGenerator):
             retrieved_chunk_count=len(context_chunks),
             has_relevant_context=True,
             latency_ms=round(elapsed_ms, 2),
+            prompt_tokens=prompt_tokens,
+            completion_tokens=completion_tokens,
+            total_tokens=total_tokens,
         )

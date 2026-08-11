@@ -4,10 +4,12 @@ import pytest
 from app.generation.base import BaseGenerator
 from app.generation.exceptions import GenerationError
 from app.generation.service import NO_CONTEXT_RESPONSE_TEXT
+from app.logging.logger import BaseQueryLogger
 from app.rag.service import RAGService
 from app.retrieval.base import BaseRetriever
 from app.retrieval.exceptions import RetrievalError
 from app.schemas.document import DocumentChunk
+from app.schemas.metrics import QueryExecutionMetrics
 from app.schemas.query import Citation, RAGQueryResponse
 
 
@@ -54,8 +56,10 @@ def test_rag_service_retrieves_then_generates():
         context_chunks=[chunk_1, chunk_2],
     )
 
-    # 3. Verify returned result matches generator output
-    assert result == expected_response
+    # 3. Verify returned result contains expected answer and metrics
+    assert result.answer == expected_response.answer
+    assert result.metrics is not None
+    assert result.metrics.retrieved_chunk_count == 2
 
 
 def test_rag_service_passes_retrieval_parameters():
@@ -115,7 +119,7 @@ def test_rag_service_empty_retrieval_passes_empty_context_to_generator():
         query="Unknown Query",
         context_chunks=[],
     )
-    assert result == no_context_resp
+    assert result.answer == NO_CONTEXT_RESPONSE_TEXT
     assert result.has_relevant_context is False
 
 
@@ -153,8 +157,49 @@ def test_rag_service_generation_error_propagates():
     assert "Ollama service failure" in str(exc_info.value)
 
 
+def test_rag_service_logs_and_attaches_metrics():
+    """Test 6: Verify QueryObservabilityLogger is called and response.metrics is populated."""
+    mock_retriever = MagicMock(spec=BaseRetriever)
+    mock_generator = MagicMock(spec=BaseGenerator)
+    mock_logger = MagicMock(spec=BaseQueryLogger)
+
+    chunk = DocumentChunk(chunk_id="c1", doc_id="d1", text="Sample", chunk_index=0, metadata={})
+    mock_retriever.retrieve.return_value = [chunk]
+
+    mock_generator.generate.return_value = RAGQueryResponse(
+        query="Test query",
+        answer="Test answer",
+        citations=[],
+        retrieved_chunk_count=1,
+        has_relevant_context=True,
+        latency_ms=50.0,
+        prompt_tokens=45,
+        completion_tokens=15,
+        total_tokens=60,
+    )
+
+    service = RAGService(retriever=mock_retriever, generator=mock_generator, query_logger=mock_logger)
+    result = service.query("Test query")
+
+    # Verify logger was called once
+    mock_logger.log_query_metrics.assert_called_once()
+    logged_query, logged_metrics = mock_logger.log_query_metrics.call_args[0]
+    assert logged_query == "Test query"
+    assert isinstance(logged_metrics, QueryExecutionMetrics)
+    assert logged_metrics.retrieved_chunk_count == 1
+    assert logged_metrics.prompt_tokens == 45
+    assert logged_metrics.completion_tokens == 15
+    assert logged_metrics.total_tokens == 60
+    assert logged_metrics.retrieval_latency_ms >= 0.0
+    assert logged_metrics.generation_latency_ms >= 0.0
+    assert logged_metrics.total_latency_ms >= logged_metrics.retrieval_latency_ms
+
+    # Verify attached metrics on response
+    assert result.metrics == logged_metrics
+
+
 def test_rag_service_does_not_directly_call_qdrant_or_ollama():
-    """Test 6: Architectural boundary check - RAGService only relies on injected abstractions."""
+    """Test 7: Architectural boundary check - RAGService only relies on injected abstractions."""
     mock_retriever = MagicMock(spec=BaseRetriever)
     mock_generator = MagicMock(spec=BaseGenerator)
 

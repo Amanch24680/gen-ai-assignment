@@ -1,5 +1,5 @@
 import logging
-from typing import List, Optional
+from typing import Dict, List, Optional
 from sentence_transformers import SentenceTransformer
 
 from app.config.settings import get_settings
@@ -12,8 +12,11 @@ class SentenceTransformerEmbeddingService(BaseEmbeddingService):
     """
     Embedding service utilizing sentence-transformers (BAAI/bge-small-en-v1.5 by default).
     Loads the underlying SentenceTransformer model lazily upon first invocation.
+    Caches model instances across invocations to preserve PyTorch process stability.
     Employs normalized L2 embeddings suitable for Cosine distance vector search.
     """
+
+    _model_cache: Dict[str, SentenceTransformer] = {}
 
     def __init__(self, model_name: Optional[str] = None):
         settings = get_settings()
@@ -24,12 +27,17 @@ class SentenceTransformerEmbeddingService(BaseEmbeddingService):
     def _get_model(self) -> SentenceTransformer:
         """Lazy load and cache the SentenceTransformer model instance."""
         if self._model is None:
-            logger.info(f"Loading SentenceTransformer model: {self.model_name}")
-            self._model = SentenceTransformer(self.model_name)
+            if self.model_name not in SentenceTransformerEmbeddingService._model_cache:
+                logger.info(f"Loading SentenceTransformer model: {self.model_name}")
+                SentenceTransformerEmbeddingService._model_cache[self.model_name] = SentenceTransformer(self.model_name)
+            self._model = SentenceTransformerEmbeddingService._model_cache[self.model_name]
             try:
-                self._dimension = self._model.get_sentence_embedding_dimension()
+                self._dimension = self._model.get_embedding_dimension()
             except AttributeError:
-                self._dimension = 384
+                try:
+                    self._dimension = self._model.get_sentence_embedding_dimension()
+                except AttributeError:
+                    self._dimension = 384
         return self._model
 
     @property

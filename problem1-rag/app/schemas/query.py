@@ -1,6 +1,8 @@
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
+from app.schemas.metrics import QueryExecutionMetrics
+
 
 class Citation(BaseModel):
     """Citation metadata for a grounded answer segment."""
@@ -26,3 +28,7 @@ class RAGQueryResponse(BaseModel):
     retrieved_chunk_count: int = Field(description="Number of chunks retrieved above relevance threshold")
     has_relevant_context: bool = Field(description="Flag indicating if relevant context was found")
     latency_ms: float = Field(description="Total request execution latency in milliseconds")
+    prompt_tokens: Optional[int] = Field(default=None, description="Number of tokens in prompt")
+    completion_tokens: Optional[int] = Field(default=None, description="Number of tokens in generated response")
+    total_tokens: Optional[int] = Field(default=None, description="Total token count for request")
+    metrics: Optional[QueryExecutionMetrics] = Field(default=None, description="Detailed execution & observability metrics")
