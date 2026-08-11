@@ -5,6 +5,12 @@ from typing import List
 class BaseEmbeddingService(ABC):
     """Abstract base class for vector embedding generation services."""
 
+    @property
+    @abstractmethod
+    def dimension(self) -> int:
+        """Return the vector embedding dimension."""
+        pass
+
     @abstractmethod
     def embed_text(self, text: str) -> List[float]:
         """Embed a single text string into a vector float representation."""
