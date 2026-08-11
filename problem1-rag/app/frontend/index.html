@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cost-Efficient RAG Chat Application</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div id="app-container" class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1 class="app-title">Cost-Efficient RAG Application</h1>
+            <div id="status-indicator" class="status-badge" aria-live="polite">Ready</div>
+        </header>
+
+        <!-- Main Chat Area -->
+        <main class="chat-viewport">
+            <div id="chat-messages" class="chat-messages" role="log" aria-live="polite">
+                <!-- Initial Empty State -->
+                <div id="empty-state" class="empty-state">
+                    <h2>Welcome to RAG Chat</h2>
+                    <p>Ask any question based on ingested documents to receive a grounded answer with citations.</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Global Error Container -->
+        <div id="error-container" class="error-container" role="alert" style="display: none;">
+            <span id="error-message" class="error-message"></span>
+            <button id="error-close-btn" class="error-close-btn" aria-label="Close error message">&times;</button>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loading-indicator" class="loading-indicator" aria-live="assertive" style="display: none;">
+            <span class="loading-spinner"></span>
+            <span class="loading-text">Processing query and generating answer...</span>
+        </div>
+
+        <!-- Input Area -->
+        <footer class="input-container">
+            <form id="chat-form" class="chat-form">
+                <textarea 
+                    id="query-input" 
+                    class="query-input" 
+                    placeholder="Type your question here..." 
+                    rows="2" 
+                    required
+                    aria-label="User question input"
+                ></textarea>
+                <button type="submit" id="send-button" class="send-button" aria-label="Send query">
+                    Send
+                </button>
+            </form>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
