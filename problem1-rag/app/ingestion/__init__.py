@@ -13,6 +13,7 @@ from app.ingestion.parsers import (
     DocumentLoader,
 )
 from app.ingestion.chunker import TextChunker
+from app.ingestion.service import IngestionService
 
 __all__ = [
     "BaseDocumentParser",
@@ -27,4 +28,5 @@ __all__ = [
     "MarkdownParser",
     "DocumentLoader",
     "TextChunker",
+    "IngestionService",
 ]
