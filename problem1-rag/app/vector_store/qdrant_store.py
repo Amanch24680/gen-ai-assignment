@@ -1,3 +1,4 @@
+import hashlib
 import logging
 import uuid
 from pathlib import Path
@@ -15,10 +16,17 @@ logger = logging.getLogger(__name__)
 
 def chunk_id_to_qdrant_id(chunk_id: str) -> str:
     """
-    Deterministically convert a 32-character hex chunk_id string into a valid Qdrant UUID point ID string.
-    Example: '9a2caeacc9a95781...' -> '9a2caeac-c9a9-5781-...'
+    Deterministically convert any chunk_id string into a valid Qdrant UUID point ID string.
+    If chunk_id is a valid 32-character hex string, converts directly.
+    Otherwise, computes SHA-256 hash hex string to guarantee valid UUID conversion.
     """
-    return str(uuid.UUID(hex=chunk_id[:32]))
+    if len(chunk_id) == 32:
+        try:
+            return str(uuid.UUID(hex=chunk_id))
+        except ValueError:
+            pass
+    hex_str = hashlib.sha256(chunk_id.encode("utf-8")).hexdigest()[:32]
+    return str(uuid.UUID(hex=hex_str))
 
 
 class QdrantVectorStore(BaseVectorStore):
@@ -159,13 +167,17 @@ class QdrantVectorStore(BaseVectorStore):
         results: List[DocumentChunk] = []
         for point in search_result.points:
             p = point.payload or {}
+            score = point.score
+            meta = dict(p)
+            meta["score"] = score
             chunk = DocumentChunk(
                 chunk_id=p.get("chunk_id", str(point.id)),
                 doc_id=p.get("doc_id", p.get("document_id", "")),
                 text=p.get("text", ""),
                 chunk_index=p.get("chunk_index", 0),
-                metadata=p,
+                metadata=meta,
                 embedding=point.vector if isinstance(point.vector, list) else None,
+                score=score,
             )
             results.append(chunk)
 

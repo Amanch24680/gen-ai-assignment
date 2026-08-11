@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
 
@@ -11,10 +11,11 @@ class Document(BaseModel):
 
 
 class DocumentChunk(BaseModel):
-    """Chunked document segment with optional embedding vector."""
+    """Chunked document segment with optional embedding vector and score."""
     chunk_id: str = Field(description="Unique identifier for the chunk")
     doc_id: str = Field(description="Parent document identifier")
     text: str = Field(description="Chunk text content")
     chunk_index: int = Field(description="Sequential position of chunk within document")
     metadata: Dict[str, Any] = Field(default_factory=dict, description="Chunk level metadata")
-    embedding: Optional[list[float]] = Field(default=None, description="Vector embedding representation")
+    embedding: Optional[List[float]] = Field(default=None, description="Vector embedding representation")
+    score: Optional[float] = Field(default=None, description="Similarity score from vector search")
