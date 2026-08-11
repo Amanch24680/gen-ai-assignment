@@ -1,0 +1,58 @@
+[
+  {
+    "id": "s001",
+    "input": "What candidate low-cost vector databases are recommended for Problem 1?",
+    "system_prompt": "Answer accurately and concisely based on the assignment PDF.",
+    "model_output": "The recommended low-cost vector databases for Problem 1 include Qdrant, ChromaDB, and PGvector.",
+    "expected_output": "Qdrant, ChromaDB, and PGvector.",
+    "category": "normal_correct"
+  },
+  {
+    "id": "s002",
+    "input": "What embedding model is specified for Problem 1?",
+    "system_prompt": "Answer accurately based on the assignment PDF.",
+    "model_output": "Problem 1 uses OpenAI gpt-4o-mini API for embeddings.",
+    "expected_output": "SentenceTransformers all-MiniLM-L6-v2 (384-dimensional dense vectors).",
+    "category": "incorrect_answer"
+  },
+  {
+    "id": "s003",
+    "input": "What are the required document file formats for ingestion in Problem 1?",
+    "system_prompt": "List all required document formats.",
+    "model_output": "The pipeline supports PDF files.",
+    "expected_output": "PDF, HTML, and Markdown files.",
+    "category": "incomplete_answer"
+  },
+  {
+    "id": "s004",
+    "input": "What is the default chunk size and chunk overlap specified in Problem 1?",
+    "system_prompt": "State the chunk size and chunk overlap clearly.",
+    "model_output": "To configure chunking effectively, the application specifies a default chunk size of 500 characters alongside an overlapping window of 50 characters between adjacent text chunks, ensuring sentence boundaries and context continuity are preserved.",
+    "expected_output": "Chunk size = 500 characters, chunk overlap = 50 characters.",
+    "category": "verbose_correct"
+  },
+  {
+    "id": "s005",
+    "input": "What is the local LLM model used for text generation in Problem 1?",
+    "system_prompt": "Be concise.",
+    "model_output": "gemma:2b via Ollama.",
+    "expected_output": "Gemma 2B running locally via Ollama.",
+    "category": "terse_correct"
+  },
+  {
+    "id": "s006",
+    "input": "What is the GPU VRAM requirement for running 70B parameter models in Problem 1?",
+    "system_prompt": "State facts accurately.",
+    "model_output": "Problem 1 requires exactly 8GB GPU VRAM to run a 70B parameter LLM locally using 4-bit quantized Ollama.",
+    "expected_output": "The assignment document does not specify GPU VRAM requirements or 70B parameter models.",
+    "category": "confidently_wrong"
+  },
+  {
+    "id": "s007",
+    "input": "List the top 3 vector databases mentioned in the document in bullet points.",
+    "system_prompt": "Use bullet points only. Do not write introductory prose.",
+    "model_output": "Sure! Here is a helpful summary of the top vector databases: 1. Qdrant 2. Chroma 3. PGvector. Hope this helps!",
+    "expected_output": "- Qdrant\n- ChromaDB\n- PGvector",
+    "category": "instruction_violation"
+  }
+]

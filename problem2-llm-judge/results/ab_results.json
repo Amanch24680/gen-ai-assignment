@@ -1,0 +1,19 @@
+{
+  "total_cases": 1,
+  "wins_a": 1,
+  "wins_b": 0,
+  "ties": 0,
+  "win_rate_a": 1.0,
+  "win_rate_b": 0.0,
+  "overall_winner": "Candidate A",
+  "verdicts": [
+    {
+      "question_id": "ab001",
+      "winner": "A",
+      "score_a": 5.0,
+      "score_b": 3.0,
+      "rationale": "",
+      "latency_ms": 0.0
+    }
+  ]
+}

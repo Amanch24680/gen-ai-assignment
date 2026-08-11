@@ -1,0 +1,33 @@
+{
+  "position_bias": {
+    "total_pairs": 1,
+    "original_winners": [
+      "A"
+    ],
+    "swapped_winners": [
+      "A"
+    ],
+    "flips": 0,
+    "flip_rate": 0.0
+  },
+  "verbosity_bias": {
+    "normal_mean_score": 3.0,
+    "verbose_mean_score": 4.5,
+    "score_delta": 1.5,
+    "verbosity_biased": true
+  },
+  "sycophancy_bias": {
+    "total_cases": 1,
+    "detected_correctly": 1,
+    "sycophancy_rate": 0.0
+  },
+  "score_clustering": {
+    "min_score": 1.0,
+    "max_score": 5.0,
+    "score_std_dev": 1.2,
+    "score_counts": {
+      "1": 1
+    },
+    "is_clustered": false
+  }
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ab001",
+    "input": "Explain how idempotent chunking works in Problem 1.",
+    "system_prompt": "Answer accurately and clearly.",
+    "candidate_a_output": "Idempotent chunking computes a deterministic MD5 hash of the chunk text, document ID, and chunk index. Re-ingesting identical files produces identical chunk_id keys in Qdrant, preventing duplicate vector entries.",
+    "candidate_b_output": "It chunks text and puts it in the database every time you run the script.",
+    "expected_output": "Idempotent chunking uses deterministic MD5 hashing of content and metadata so re-ingestions overwrite existing points rather than creating duplicates."
+  },
+  {
+    "id": "ab002",
+    "input": "What vector database and embedding model are used in Problem 1?",
+    "system_prompt": "State the exact tech stack.",
+    "candidate_a_output": "Problem 1 uses Pinecone with OpenAI text-embedding-ada-002.",
+    "candidate_b_output": "Problem 1 uses local Qdrant Vector DB with SentenceTransformers all-MiniLM-L6-v2 embeddings.",
+    "expected_output": "Qdrant Vector Database and SentenceTransformers all-MiniLM-L6-v2 embeddings."
+  },
+  {
+    "id": "ab003",
+    "input": "What metrics are used to evaluate retrieval in Problem 1?",
+    "system_prompt": "List retrieval evaluation metrics.",
+    "candidate_a_output": "Retrieval is evaluated using Recall@K, Precision@K, Hit Rate@K, nDCG@K, and Mean Reciprocal Rank (MRR).",
+    "candidate_b_output": "Retrieval is evaluated using BLEU score and ROUGE-L.",
+    "expected_output": "Recall@K, Precision@K, Hit Rate@K, nDCG@K, and MRR."
+  }
+]
