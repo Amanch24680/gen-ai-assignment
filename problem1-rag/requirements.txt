@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+qdrant-client
+sentence-transformers
+pypdf
+beautifulsoup4
+markdown
+python-dotenv
+pydantic-settings
+httpx
+numpy
+scikit-learn
+pandas
+pytest

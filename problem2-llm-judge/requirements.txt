@@ -1,0 +1,8 @@
+python-dotenv
+pydantic
+pydantic-settings
+httpx
+pandas
+numpy
+scikit-learn
+pytest
