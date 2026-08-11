@@ -1,0 +1,243 @@
+[
+  {
+    "id": "q001",
+    "question": "What candidate low-cost vector stores are suggested for Problem 1 in the assignment?",
+    "category": "direct_fact",
+    "ground_truth_answer": "The suggested low-cost vector stores are pgvector, Qdrant (self-hosted/embedded), ChromaDB, LanceDB, FAISS, and sqlite-vec.",
+    "relevant_documents": [
+      "10e0b8a88698680cfc3084cffc67ff6e"
+    ],
+    "relevant_chunk_ids": [
+      "60e906b285514b553b944db54bd9790e"
+    ]
+  },
+  {
+    "id": "q002",
+    "question": "What embedding model and local LLM generator are specified in sample.html?",
+    "category": "direct_fact",
+    "ground_truth_answer": "The document specifies BAAI/bge-small-en-v1.5 as the embedding model and quantized Gemma 2B as the local LLM generator.",
+    "relevant_documents": [
+      "86869509c33cbcc981522ac7db873707"
+    ],
+    "relevant_chunk_ids": [
+      "28d91c98715d564551c5487c48cb71cf"
+    ]
+  },
+  {
+    "id": "q003",
+    "question": "What vector store is specified for local mode vector storage in sample.md?",
+    "category": "direct_fact",
+    "ground_truth_answer": "The system utilizes Qdrant running in local mode for vector storage and similarity search.",
+    "relevant_documents": [
+      "e9b05c46d0fbe466282409ee42d468b0"
+    ],
+    "relevant_chunk_ids": [
+      "79f3e18f8721efe460d3028aa0368e9c"
+    ]
+  },
+  {
+    "id": "q004",
+    "question": "What are the point weight allocations across the scoring areas for Problem 1?",
+    "category": "numerical_detail",
+    "ground_truth_answer": "Problem 1 scoring is allocated as 20 points for Correctness & ingestion, 20 points for Retrieval evaluation, 20 points for Answer evaluation, 20 points for Cost analysis, and 20 points for Engineering & clarity.",
+    "relevant_documents": [
+      "10e0b8a88698680cfc3084cffc67ff6e"
+    ],
+    "relevant_chunk_ids": [
+      "a03a6acc5d67ff1f80f39227bd4cc069",
+      "46d37204e35cef560a915a6e9814f8da"
+    ]
+  },
+  {
+    "id": "q005",
+    "question": "What scale points are specified for the cost comparison table in Problem 1?",
+    "category": "numerical_detail",
+    "ground_truth_answer": "The cost comparison requires calculating monthly costs at vector index scales of 100K, 1M, and 10M vectors vs a managed DB.",
+    "relevant_documents": [
+      "10e0b8a88698680cfc3084cffc67ff6e"
+    ],
+    "relevant_chunk_ids": [
+      "a03a6acc5d67ff1f80f39227bd4cc069"
+    ]
+  },
+  {
+    "id": "q006",
+    "question": "What evaluation metrics are required for evaluating the retrieval layer in Problem 1?",
+    "category": "terminology",
+    "ground_truth_answer": "The required retrieval evaluation metrics are Recall@k / Hit Rate, MRR (Mean Reciprocal Rank), nDCG@k, and context precision.",
+    "relevant_documents": [
+      "10e0b8a88698680cfc3084cffc67ff6e"
+    ],
+    "relevant_chunk_ids": [
+      "d7179178acb1ef7c130f3034e5f14d3b"
+    ]
+  },
+  {
+    "id": "q007",
+    "question": "What judging modes are listed for Problem 2 in the assignment?",
+    "category": "terminology",
+    "ground_truth_answer": "The listed judging modes are pointwise scoring, pairwise A-vs-B, reference-based, and reference-free.",
+    "relevant_documents": [
+      "4cdff49da821d930e7b448d16308f127"
+    ],
+    "relevant_chunk_ids": [
+      "0b2ab2a95ddd8f971257478934805a59"
+    ]
+  },
+  {
+    "id": "q008",
+    "question": "How is position bias (A/B ordering bias) mitigated in Problem 2?",
+    "category": "deep_detail",
+    "ground_truth_answer": "Position bias is mitigated by running each pair in BOTH orders (A/B and B/A), then averaging the scores or requiring agreement between both runs, and reporting the verdict flip rate.",
+    "relevant_documents": [
+      "4cdff49da821d930e7b448d16308f127"
+    ],
+    "relevant_chunk_ids": [
+      "f71cb77bb0151a9869543ff2d8073108"
+    ]
+  },
+  {
+    "id": "q009",
+    "question": "What techniques are specified for validating the LLM judge in Problem 2?",
+    "category": "deep_detail",
+    "ground_truth_answer": "Judge validation requires measuring agreement with human/gold labels (agreement rate, Cohen's kappa, or correlation), test-retest consistency (how often the verdict flips on re-run), or evaluating against an adversarial probe set.",
+    "relevant_documents": [
+      "4cdff49da821d930e7b448d16308f127"
+    ],
+    "relevant_chunk_ids": [
+      "f71cb77bb0151a9869543ff2d8073108",
+      "66110d66905285ad578eb40d27fdadf8"
+    ]
+  },
+  {
+    "id": "q010",
+    "question": "What deliverables are required for Problem 1 and Problem 2?",
+    "category": "multi_chunk",
+    "ground_truth_answer": "Problem 1 deliverables include a runnable RAG service, an evaluation harness + results file across all three layers, a cost-comparison table, and a README with discussion. Problem 2 deliverables include a runnable pipeline, one judging mode + documented rubric, a position-bias check with results, a judge-validation artifact, an A/B comparison declaring a winner, and a README with discussion.",
+    "relevant_documents": [
+      "10e0b8a88698680cfc3084cffc67ff6e",
+      "4cdff49da821d930e7b448d16308f127"
+    ],
+    "relevant_chunk_ids": [
+      "a03a6acc5d67ff1f80f39227bd4cc069",
+      "66110d66905285ad578eb40d27fdadf8"
+    ]
+  },
+  {
+    "id": "q011",
+    "question": "What logging requirements are specified for the HTTP endpoint in Problem 1 and for the judging pipeline in Problem 2?",
+    "category": "multi_chunk",
+    "ground_truth_answer": "Problem 1 requires logging per-query latency, chunk count, and token usage. Problem 2 requires logging every judge prompt, raw response, judge tokens, and API calls.",
+    "relevant_documents": [
+      "10e0b8a88698680cfc3084cffc67ff6e",
+      "4cdff49da821d930e7b448d16308f127"
+    ],
+    "relevant_chunk_ids": [
+      "d7179178acb1ef7c130f3034e5f14d3b",
+      "413d4f42681245c09848d1e2d59d2455"
+    ]
+  },
+  {
+    "id": "q012",
+    "question": "What explicit criteria rubrics are suggested for the LLM judge in Problem 2?",
+    "category": "terminology",
+    "ground_truth_answer": "The suggested rubrics include correctness, faithfulness, completeness, instruction-following, tone, and safety.",
+    "relevant_documents": [
+      "4cdff49da821d930e7b448d16308f127"
+    ],
+    "relevant_chunk_ids": [
+      "413d4f42681245c09848d1e2d59d2455"
+    ]
+  },
+  {
+    "id": "q013",
+    "question": "How are verbosity and sycophancy biases mitigated in Problem 2?",
+    "category": "deep_detail",
+    "ground_truth_answer": "Verbosity bias is mitigated by controlling for length, probing with a padded answer, and penalizing unsupported length in the rubric. Sycophancy bias is mitigated by forcing per-criterion grounding and injecting a confidently-wrong probe answer.",
+    "relevant_documents": [
+      "4cdff49da821d930e7b448d16308f127"
+    ],
+    "relevant_chunk_ids": [
+      "f71cb77bb0151a9869543ff2d8073108"
+    ]
+  },
+  {
+    "id": "q014",
+    "question": "What document file formats must the RAG ingestion pipeline support?",
+    "category": "direct_fact",
+    "ground_truth_answer": "The ingestion pipeline must support PDF, HTML, and Markdown document file formats.",
+    "relevant_documents": [
+      "10e0b8a88698680cfc3084cffc67ff6e"
+    ],
+    "relevant_chunk_ids": [
+      "60e906b285514b553b944db54bd9790e",
+      "d7179178acb1ef7c130f3034e5f14d3b"
+    ]
+  },
+  {
+    "id": "q015",
+    "question": "What text chunking strategy is specified in sample.md?",
+    "category": "direct_fact",
+    "ground_truth_answer": "Documents are split into deterministic text chunks using a configurable sliding window with defined chunk size and chunk overlap.",
+    "relevant_documents": [
+      "e9b05c46d0fbe466282409ee42d468b0"
+    ],
+    "relevant_chunk_ids": [
+      "79f3e18f8721efe460d3028aa0368e9c"
+    ]
+  },
+  {
+    "id": "q016",
+    "question": "What is the maximum total point score and area breakdown for Problem 2?",
+    "category": "numerical_detail",
+    "ground_truth_answer": "The total point score for Problem 2 is 100 points, breakdown: Pipeline correctness (20), Judging design (20), Bias handling (25), Judge validation (20), and Comparison & engineering (15).",
+    "relevant_documents": [
+      "4cdff49da821d930e7b448d16308f127"
+    ],
+    "relevant_chunk_ids": [
+      "66110d66905285ad578eb40d27fdadf8",
+      "3c23ba75a28917f14eab0d5cd89bc518"
+    ]
+  },
+  {
+    "id": "q017",
+    "question": "What requirement applies to re-ingesting documents into the vector database?",
+    "category": "direct_fact",
+    "ground_truth_answer": "Re-ingestion of documents must be idempotent without creating duplicate vectors.",
+    "relevant_documents": [
+      "10e0b8a88698680cfc3084cffc67ff6e"
+    ],
+    "relevant_chunk_ids": [
+      "60e906b285514b553b944db54bd9790e",
+      "d7179178acb1ef7c130f3034e5f14d3b"
+    ]
+  },
+  {
+    "id": "q018",
+    "question": "What content is present on page 2 of sample.pdf?",
+    "category": "direct_fact",
+    "ground_truth_answer": "This is page 2 of the sample PDF fixture with additional technical specification content.",
+    "relevant_documents": [
+      "2327b6be51899bf12f2640e3e77f7ad2"
+    ],
+    "relevant_chunk_ids": [
+      "16904f81f32d03588219174d9728c264"
+    ]
+  },
+  {
+    "id": "q019",
+    "question": "What is the GPU VRAM requirement for running a 70B parameter LLM locally?",
+    "category": "unanswerable",
+    "ground_truth_answer": null,
+    "relevant_documents": [],
+    "relevant_chunk_ids": []
+  },
+  {
+    "id": "q020",
+    "question": "What is the price per million tokens for OpenAI GPT-4o API calls?",
+    "category": "unanswerable",
+    "ground_truth_answer": null,
+    "relevant_documents": [],
+    "relevant_chunk_ids": []
+  }
+]
