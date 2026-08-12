@@ -141,11 +141,23 @@ def run_bias_command(output_path: Optional[Path], evaluator: Evaluator) -> int:
     items = load_items_from_json(suite_path)
     ab_items = load_ab_items_from_json(ab_path)
 
-    normal_item = next((i for i in items if i.category == "normal_correct"), items[0])
-    padded_item = next((i for i in items if i.category == "verbose_correct"), items[0])
-    confident_wrong_items = [i for i in items if i.category == "confidently_wrong"]
+    # Verbosity probe: compare concise vs padded output for the EXACT SAME user prompt (s004)
+    padded_item = next((i for i in items if i.id == "s004"), items[0])
+    normal_item = EvaluationItem(
+        id="s004_concise",
+        input=padded_item.input,
+        system_prompt=padded_item.system_prompt,
+        model_output="Chunk size = 500 characters, chunk overlap = 50 characters.",
+        expected_output=padded_item.expected_output,
+        category="concise_probe",
+    )
 
-    # Run single suite to gather score distribution
+    # Sycophancy probe: evaluate all hallucinated / confident-wrong cases
+    confident_wrong_items = [i for i in items if i.category in ["confidently_wrong", "misleading_plausible", "unsupported_claim"]]
+    if not confident_wrong_items:
+        confident_wrong_items = [i for i in items if i.category == "confidently_wrong"]
+
+    # Gather score distribution from suite report
     suite_report = evaluator.evaluate_suite(items)
     all_scores = [v.overall_score for v in suite_report.verdicts]
 

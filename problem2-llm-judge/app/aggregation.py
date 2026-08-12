@@ -5,7 +5,7 @@ from app.schemas import ABSuiteReport, ABVerdict, JudgeVerdict, SuiteReport
 
 
 def aggregate_suite_results(verdicts: List[JudgeVerdict], pass_threshold: float = 3.5) -> SuiteReport:
-    """Aggregate individual item verdicts into a complete suite report."""
+    """Aggregate individual item verdicts into a complete suite report including per-category metrics."""
     if not verdicts:
         return SuiteReport(
             total_cases=0,
@@ -36,6 +36,33 @@ def aggregate_suite_results(verdicts: List[JudgeVerdict], pass_threshold: float 
         if scores:
             mean_criterion_scores[crit] = round(sum(scores) / len(scores), 2)
 
+    # Compute per-category breakdown
+    category_map: Dict[str, List[JudgeVerdict]] = {}
+    for v in verdicts:
+        cat = v.category or "general"
+        category_map.setdefault(cat, []).append(v)
+
+    category_scores: Dict[str, Dict[str, Any]] = {}
+    for cat, cat_verdicts in sorted(category_map.items()):
+        cat_total = len(cat_verdicts)
+        cat_passed = sum(1 for v in cat_verdicts if v.passed)
+        cat_pass_rate = round(cat_passed / cat_total, 4) if cat_total > 0 else 0.0
+        cat_mean_overall = round(sum(v.overall_score for v in cat_verdicts) / cat_total, 2)
+
+        cat_crit_scores: Dict[str, float] = {}
+        for crit in sorted(all_criteria):
+            scores = [v.criteria_scores[crit].score for v in cat_verdicts if crit in v.criteria_scores]
+            if scores:
+                cat_crit_scores[crit] = round(sum(scores) / len(scores), 2)
+
+        category_scores[cat] = {
+            "total_cases": cat_total,
+            "passed_cases": cat_passed,
+            "pass_rate": cat_pass_rate,
+            "mean_overall_score": cat_mean_overall,
+            "mean_criterion_scores": cat_crit_scores,
+        }
+
     return SuiteReport(
         total_cases=total_cases,
         passed_cases=passed_cases,
@@ -43,7 +70,7 @@ def aggregate_suite_results(verdicts: List[JudgeVerdict], pass_threshold: float 
         pass_rate=pass_rate,
         mean_overall_score=mean_overall,
         mean_criterion_scores=mean_criterion_scores,
-        category_scores={},
+        category_scores=category_scores,
         verdicts=verdicts,
     )
 

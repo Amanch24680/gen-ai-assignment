@@ -91,3 +91,18 @@ def test_measure_score_clustering():
     assert res.max_score == 5.0
     assert res.score_std_dev > 1.0
     assert res.is_clustered is False
+
+
+def test_measure_bias_empty_inputs():
+    mock_eval = MagicMock(spec=Evaluator)
+    pos_res = measure_position_bias(mock_eval, [])
+    assert pos_res.total_pairs == 0
+    assert pos_res.flip_rate == 0.0
+
+    syco_res = measure_sycophancy(mock_eval, [])
+    assert syco_res.total_cases == 0
+    assert syco_res.sycophancy_rate == 0.0
+
+    clust_res = measure_score_clustering([])
+    assert clust_res.is_clustered is True
+    assert clust_res.score_std_dev == 0.0

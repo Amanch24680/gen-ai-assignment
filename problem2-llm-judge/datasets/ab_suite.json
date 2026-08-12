@@ -20,7 +20,39 @@
     "input": "What metrics are used to evaluate retrieval in Problem 1?",
     "system_prompt": "List retrieval evaluation metrics.",
     "candidate_a_output": "Retrieval is evaluated using Recall@K, Precision@K, Hit Rate@K, nDCG@K, and Mean Reciprocal Rank (MRR).",
-    "candidate_b_output": "Retrieval is evaluated using BLEU score and ROUGE-L.",
+    "candidate_b_output": "Retrieval is evaluated using Recall@K, Precision@K, Hit Rate@K, nDCG@K, and Mean Reciprocal Rank (MRR).",
     "expected_output": "Recall@K, Precision@K, Hit Rate@K, nDCG@K, and MRR."
+  },
+  {
+    "id": "ab004",
+    "input": "What default chunk size and overlap are used in Problem 1?",
+    "system_prompt": "State chunk size and overlap.",
+    "candidate_a_output": "Chunk size = 500 characters, chunk overlap = 50 characters.",
+    "candidate_b_output": "When considering the architectural configuration of text processing in the application, the system uses a default chunk size parameter set precisely to 500 characters accompanied by an overlapping segment of 50 characters between adjacent textual chunks.",
+    "expected_output": "Chunk size = 500 characters, chunk overlap = 50 characters."
+  },
+  {
+    "id": "ab005",
+    "input": "What local LLM generator model is used in Problem 1?",
+    "system_prompt": "State the generator model.",
+    "candidate_a_output": "Problem 1 uses gemma:2b via Ollama for local text generation.",
+    "candidate_b_output": "Problem 1 uses Claude 3.5 Sonnet API for generation.",
+    "expected_output": "Gemma 2B model running locally via Ollama."
+  },
+  {
+    "id": "ab006",
+    "input": "What file formats are supported for document ingestion?",
+    "system_prompt": "List supported document formats.",
+    "candidate_a_output": "PDF, HTML, and Markdown files.",
+    "candidate_b_output": "PDF files only.",
+    "expected_output": "PDF, HTML, and Markdown files."
+  },
+  {
+    "id": "ab007",
+    "input": "List the top 3 low-cost vector databases using bullet points.",
+    "system_prompt": "Use bullet points only. No introductory text.",
+    "candidate_a_output": "- Qdrant\n- ChromaDB\n- PGvector",
+    "candidate_b_output": "Here are the top databases: 1. Qdrant 2. ChromaDB 3. PGvector.",
+    "expected_output": "- Qdrant\n- ChromaDB\n- PGvector"
   }
 ]

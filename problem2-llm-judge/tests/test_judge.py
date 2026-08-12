@@ -1,4 +1,5 @@
 from unittest.mock import MagicMock, patch
+import httpx
 import pytest
 from app.config import settings
 from app.judge import JudgeClient
@@ -36,3 +37,25 @@ def test_judge_client_mocked_ollama_call(mock_post, tmp_path):
     assert client.total_prompt_tokens == 120
     assert client.total_eval_tokens == 45
     assert audit_path.exists()
+
+
+@patch("httpx.Client.post")
+def test_judge_client_http_status_error(mock_post):
+    mock_resp = MagicMock()
+    mock_resp.status_code = 500
+    mock_resp.text = "Internal Server Error"
+    mock_resp.raise_for_status.side_effect = httpx.HTTPStatusError("500 Error", request=MagicMock(), response=mock_resp)
+    mock_post.return_value = mock_resp
+
+    client = JudgeClient()
+    with pytest.raises(RuntimeError, match="Ollama HTTP error 500"):
+        client.generate_judge_response("sys", "user")
+
+
+@patch("httpx.Client.post")
+def test_judge_client_connection_error(mock_post):
+    mock_post.side_effect = httpx.ConnectError("Connection refused")
+
+    client = JudgeClient()
+    with pytest.raises(RuntimeError, match="Ollama connection error"):
+        client.generate_judge_response("sys", "user")

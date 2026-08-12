@@ -11,6 +11,7 @@
   "verdicts": [
     {
       "question_id": "s001",
+      "category": "general",
       "criteria_scores": {
         "correctness": {
           "criterion": "correctness",
@@ -19,6 +20,7 @@
         }
       },
       "overall_score": 4.5,
+      "llm_overall_score": null,
       "passed": true,
       "summary_rationale": "Pass",
       "raw_response": "",

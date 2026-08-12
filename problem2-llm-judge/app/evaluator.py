@@ -53,6 +53,7 @@ class Evaluator:
         verdict = parse_single_item_verdict(
             raw_response=raw_response,
             question_id=item.id,
+            category=item.category or "general",
             pass_threshold=settings.pass_score_threshold,
             latency_ms=latency_ms,
         )

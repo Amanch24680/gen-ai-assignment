@@ -29,11 +29,13 @@ class JudgeVerdict(BaseModel):
     """Structured quality verdict output by the LLM Judge for a single item."""
 
     question_id: str = Field(description="Unique case identifier")
+    category: str = Field(default="general", description="Evaluation category")
     criteria_scores: Dict[str, CriterionScore] = Field(
         description="Dictionary mapping criterion name to CriterionScore"
     )
-    overall_score: float = Field(ge=1.0, le=5.0, description="Aggregate overall quality score (1.0 to 5.0)")
-    passed: bool = Field(description="Flag indicating if overall_score >= pass_score_threshold")
+    overall_score: float = Field(ge=1.0, le=5.0, description="Python-calculated mean overall quality score (1.0 to 5.0, rounded to 1 decimal place)")
+    llm_overall_score: Optional[float] = Field(default=None, description="Raw overall_score returned by LLM Judge (retained for audit/debugging)")
+    passed: bool = Field(description="Flag indicating if Python overall_score >= pass_score_threshold")
     summary_rationale: str = Field(description="Overall verdict summary")
     raw_response: str = Field(default="", description="Raw judge LLM text output for auditability")
     latency_ms: float = Field(default=0.0, description="Execution latency in milliseconds")
@@ -73,7 +75,7 @@ class SuiteReport(BaseModel):
     mean_criterion_scores: Dict[str, float] = Field(
         default_factory=dict, description="Mean score per individual criterion"
     )
-    category_scores: Dict[str, Dict[str, float]] = Field(
+    category_scores: Dict[str, Any] = Field(
         default_factory=dict, description="Per-category score breakdown"
     )
     verdicts: List[JudgeVerdict] = Field(default_factory=list, description="Per-item verdicts")

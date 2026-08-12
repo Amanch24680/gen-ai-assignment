@@ -8,7 +8,7 @@ class Settings(BaseSettings):
 
     # Generator and Judge models are independently configurable
     generator_model: str = "gemma:2b"
-    judge_model: str = "llama3:latest"
+    judge_model: str = "qwen2.5:1.5b-instruct"
 
     # Ollama Service Settings
     ollama_base_url: str = "http://localhost:11434"

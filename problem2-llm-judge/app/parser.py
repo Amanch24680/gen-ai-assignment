@@ -25,12 +25,14 @@ def clean_json_text(text: str) -> str:
 def parse_single_item_verdict(
     raw_response: str,
     question_id: str,
+    category: str = "general",
     pass_threshold: float = 3.5,
     latency_ms: float = 0.0,
 ) -> JudgeVerdict:
     """
     Parse raw judge LLM response into structured JudgeVerdict.
     Uses multi-stage parsing with robust fallback handling.
+    Python calculates overall_score = round(mean(5 criteria scores), 1).
     """
     cleaned_text = clean_json_text(raw_response)
     parsed_fallback = False
@@ -84,21 +86,24 @@ def parse_single_item_verdict(
                     rationale="Extracted via fallback regex parser." if match else "Default fallback score.",
                 )
 
-    # Overall score computation
+    # Extract LLM overall score for audit/debugging if present
+    llm_overall_score: Optional[float] = None
     if "overall_score" in data and isinstance(data["overall_score"], (int, float)):
-        overall_score = max(1.0, min(5.0, float(data["overall_score"])))
-    else:
-        # Average of criteria scores
-        overall_score = sum(c.score for c in criteria_scores.values()) / len(criteria_scores)
+        llm_overall_score = round(max(1.0, min(5.0, float(data["overall_score"]))), 1)
 
-    overall_score = round(overall_score, 2)
+    # PHASE 3 CRITICAL REQUIREMENT: Python MUST calculate overall_score = mean(5 criteria), rounded to 1 decimal place.
+    raw_mean = sum(c.score for c in criteria_scores.values()) / len(criteria_scores)
+    overall_score = round(max(1.0, min(5.0, raw_mean)), 1)
+
     summary_rationale = str(data.get("summary_rationale", "Verdict generated via judge pipeline."))
     passed = overall_score >= pass_threshold
 
     return JudgeVerdict(
         question_id=question_id,
+        category=category,
         criteria_scores=criteria_scores,
         overall_score=overall_score,
+        llm_overall_score=llm_overall_score,
         passed=passed,
         summary_rationale=summary_rationale,
         raw_response=raw_response,
@@ -126,8 +131,10 @@ def parse_ab_verdict(
             except Exception:
                 data = {}
 
-    winner = str(data.get("winner", "Tie")).strip().upper()
-    if winner not in ["A", "B", "TIE"]:
+    raw_winner = str(data.get("winner", "Tie")).strip().upper()
+    if raw_winner in ["A", "B", "TIE"]:
+        winner = "Tie" if raw_winner == "TIE" else raw_winner
+    else:
         # Regex fallback for winner
         if re.search(r'"winner"\s*:\s*"A"', raw_response, re.IGNORECASE):
             winner = "A"
@@ -138,8 +145,8 @@ def parse_ab_verdict(
 
     score_a = float(data.get("score_a", 3.0)) if isinstance(data.get("score_a"), (int, float)) else 3.0
     score_b = float(data.get("score_b", 3.0)) if isinstance(data.get("score_b"), (int, float)) else 3.0
-    score_a = max(1.0, min(5.0, score_a))
-    score_b = max(1.0, min(5.0, score_b))
+    score_a = round(max(1.0, min(5.0, score_a)), 1)
+    score_b = round(max(1.0, min(5.0, score_b)), 1)
 
     rationale = str(data.get("rationale", "Pairwise A/B comparison completed."))
 

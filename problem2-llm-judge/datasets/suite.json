@@ -2,18 +2,18 @@
   {
     "id": "s001",
     "input": "What candidate low-cost vector databases are recommended for Problem 1?",
-    "system_prompt": "Answer accurately and concisely based on the assignment PDF.",
+    "system_prompt": "Answer accurately and concisely based on the assignment specification.",
     "model_output": "The recommended low-cost vector databases for Problem 1 include Qdrant, ChromaDB, and PGvector.",
     "expected_output": "Qdrant, ChromaDB, and PGvector.",
-    "category": "normal_correct"
+    "category": "fully_correct"
   },
   {
     "id": "s002",
     "input": "What embedding model is specified for Problem 1?",
-    "system_prompt": "Answer accurately based on the assignment PDF.",
+    "system_prompt": "Answer accurately based on the assignment specification.",
     "model_output": "Problem 1 uses OpenAI gpt-4o-mini API for embeddings.",
     "expected_output": "SentenceTransformers all-MiniLM-L6-v2 (384-dimensional dense vectors).",
-    "category": "incorrect_answer"
+    "category": "incorrect_factual"
   },
   {
     "id": "s003",
@@ -37,7 +37,7 @@
     "system_prompt": "Be concise.",
     "model_output": "gemma:2b via Ollama.",
     "expected_output": "Gemma 2B running locally via Ollama.",
-    "category": "terse_correct"
+    "category": "concise_correct"
   },
   {
     "id": "s006",
@@ -54,5 +54,69 @@
     "model_output": "Sure! Here is a helpful summary of the top vector databases: 1. Qdrant 2. Chroma 3. PGvector. Hope this helps!",
     "expected_output": "- Qdrant\n- ChromaDB\n- PGvector",
     "category": "instruction_violation"
+  },
+  {
+    "id": "s008",
+    "input": "What retrieval metrics are measured in Phase 9.2 of Problem 1?",
+    "system_prompt": "List all retrieval metrics.",
+    "model_output": "Phase 9.2 measures Recall@5, Hit Rate@5, and BLEU score.",
+    "expected_output": "Recall@k, Hit Rate@k, MRR (Mean Reciprocal Rank), nDCG@k, and Context Precision.",
+    "category": "partially_correct"
+  },
+  {
+    "id": "s009",
+    "input": "How does the ingestion pipeline handle duplicate document re-ingestion?",
+    "system_prompt": "Explain duplicate document handling.",
+    "model_output": "The pipeline uses MD5 hashing to generate deterministic chunk IDs, and automatically sends an email notification to the administrator whenever a duplicate document is uploaded.",
+    "expected_output": "The pipeline generates deterministic MD5 hashes for chunk IDs so re-ingestions overwrite existing points in Qdrant rather than duplicating them.",
+    "category": "unsupported_claim"
+  },
+  {
+    "id": "s010",
+    "input": "What port does the local Qdrant service run on by default in Problem 1?",
+    "system_prompt": "Answer concisely.",
+    "model_output": "Qdrant runs on port 6333 by default. Additionally, PostgreSQL runs on port 5432 and MongoDB uses port 27017 for document storage.",
+    "expected_output": "Qdrant REST API runs on port 6333 (and gRPC on port 6334).",
+    "category": "irrelevant_info"
+  },
+  {
+    "id": "s011",
+    "input": "What document formats must be supported by DocumentLoader?",
+    "system_prompt": "List document formats as a clean JSON array.",
+    "model_output": "PDF HTML Markdown",
+    "expected_output": "[\"PDF\", \"HTML\", \"Markdown\"]",
+    "category": "poor_formatting"
+  },
+  {
+    "id": "s012",
+    "input": "Summarize the objective of Problem 1.",
+    "system_prompt": "Summarize in a professional, objective tone.",
+    "model_output": "Problem 1 aims to design and build a cost-efficient, production-grade RAG pipeline using local components (Qdrant, SentenceTransformers, and Ollama) accompanied by comprehensive retrieval and end-to-end evaluation metrics.",
+    "expected_output": "Build a cost-efficient RAG system with local embeddings, local Qdrant, local Gemma 2B LLM, and comprehensive evaluation metrics.",
+    "category": "professional_tone"
+  },
+  {
+    "id": "s013",
+    "input": "What is the exact API key for the cloud Pinecone instance in Problem 1?",
+    "system_prompt": "Answer based only on assignment facts. If unanswerable, state so clearly.",
+    "model_output": "The assignment uses a local Qdrant vector database and does not use or specify a cloud Pinecone API key.",
+    "expected_output": "The assignment uses local Qdrant and does not contain a Pinecone API key.",
+    "category": "unanswerable"
+  },
+  {
+    "id": "s014",
+    "input": "Does Problem 1 require using OpenAI embeddings for production retrieval?",
+    "system_prompt": "Answer accurately.",
+    "model_output": "Yes, Problem 1 requires OpenAI text-embedding-3-small API for primary production retrieval to achieve maximum Recall@5.",
+    "expected_output": "No, Problem 1 strictly requires SentenceTransformers all-MiniLM-L6-v2 to run locally without external API costs.",
+    "category": "misleading_plausible"
+  },
+  {
+    "id": "s015",
+    "input": "State the embedding model name, vector dimensions, chunk size, chunk overlap, and generation model for Problem 1.",
+    "system_prompt": "Provide all 5 parameters clearly.",
+    "model_output": "1. Embedding model: SentenceTransformers all-MiniLM-L6-v2\n2. Vector dimensions: 384\n3. Chunk size: 500 characters\n4. Chunk overlap: 50 characters\n5. Generation model: gemma:2b",
+    "expected_output": "Embedding model: all-MiniLM-L6-v2, Dimensions: 384, Chunk size: 500, Chunk overlap: 50, Generation model: gemma:2b.",
+    "category": "edge_case_multifact"
   }
 ]
