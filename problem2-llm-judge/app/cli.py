@@ -15,6 +15,7 @@ from app.config import settings
 from app.evaluator import Evaluator
 from app.judge import JudgeClient
 from app.schemas import ABComparisonItem, EvaluationItem
+from app.validation import run_test_retest_validation
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
@@ -43,9 +44,14 @@ def build_parser() -> argparse.ArgumentParser:
         help="Run comprehensive bias measurement probe suite.",
     )
     parser.add_argument(
+        "--validate",
+        action="store_true",
+        help="Run test-retest consistency validation experiment.",
+    )
+    parser.add_argument(
         "--all",
         action="store_true",
-        help="Run suite evaluation, A/B comparison, and bias probe suite sequentially.",
+        help="Run suite evaluation, A/B comparison, bias probes, and test-retest validation sequentially.",
     )
     parser.add_argument(
         "--output",
@@ -172,7 +178,7 @@ def run_bias_command(output_path: Optional[Path], evaluator: Evaluator) -> int:
 
     print(f"1. Position Bias Flip Rate: {bias_report.position_bias.flip_rate * 100:.1f}% ({bias_report.position_bias.flips}/{bias_report.position_bias.total_pairs} flips)")
     print(f"2. Verbosity Score Delta: {bias_report.verbosity_bias.score_delta:+.2f} (Normal: {bias_report.verbosity_bias.normal_mean_score:.2f}, Verbose: {bias_report.verbosity_bias.verbose_mean_score:.2f})")
-    print(f"3. Sycophancy Detection: {bias_report.sycophancy_bias.detected_correctly}/{bias_report.sycophancy_bias.total_cases} detected (Sycophancy Rate: {bias_report.sycophancy_bias.sycophancy_rate * 100:.1f}%)")
+    print(f"3. Sycophancy Probe: {bias_report.sycophancy_bias.detected_correctly}/{bias_report.sycophancy_bias.total_cases} detected correctly ({bias_report.sycophancy_bias.detection_rate * 100:.1f}% detection rate, {bias_report.sycophancy_bias.sycophancy_rate * 100:.1f}% sycophancy rate)")
     print(f"4. Score Spread (Std Dev): {bias_report.score_clustering.score_std_dev:.4f} (Min: {bias_report.score_clustering.min_score:.1f}, Max: {bias_report.score_clustering.max_score:.1f})")
     print("-" * 60)
 
@@ -181,6 +187,34 @@ def run_bias_command(output_path: Optional[Path], evaluator: Evaluator) -> int:
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(bias_report.model_dump(), f, indent=2)
     print(f"Bias measurement report saved to: {out_file}\n")
+    return 0
+
+
+def run_validate_command(output_path: Optional[Path], evaluator: Evaluator) -> int:
+    """Run test-retest consistency validation experiment."""
+    print("-" * 60)
+    print("RUNNING LLM-AS-JUDGE TEST-RETEST CONSISTENCY VALIDATION")
+    print("-" * 60)
+    print(f"Judge Model: {evaluator.judge_client.judge_model}")
+    print(f"Temperature: {evaluator.judge_client.temperature}\n")
+
+    suite_path = settings.datasets_dir / "suite.json"
+    items = load_items_from_json(suite_path)
+
+    val_report = run_test_retest_validation(evaluator, items, temperature=evaluator.judge_client.temperature)
+
+    print(f"Total Cases Evaluated: {val_report.total_cases}")
+    print(f"Unchanged Verdicts/Scores: {val_report.unchanged_cases}")
+    print(f"Changed Verdicts/Scores: {val_report.changed_cases}")
+    print(f"Consistency Rate: {val_report.consistency_rate * 100:.1f}%")
+    print(f"Mean Score Delta: {val_report.mean_score_delta:.2f} points")
+    print("-" * 60)
+
+    out_file = output_path or (settings.results_dir / "validation_results.json")
+    out_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_file, "w", encoding="utf-8") as f:
+        json.dump(val_report.model_dump(), f, indent=2)
+    print(f"Validation report saved to: {out_file}\n")
     return 0
 
 
@@ -197,6 +231,7 @@ def main(args: Optional[List[str]] = None) -> int:
         run_suite_command(suite_p, settings.results_dir / "suite_results.json", evaluator)
         run_ab_command(ab_p, settings.results_dir / "ab_results.json", evaluator)
         run_bias_command(settings.results_dir / "bias_results.json", evaluator)
+        run_validate_command(settings.results_dir / "validation_results.json", evaluator)
         return 0
 
     if parsed.suite:
@@ -211,12 +246,17 @@ def main(args: Optional[List[str]] = None) -> int:
         out_p = Path(parsed.output) if parsed.output else None
         return run_bias_command(out_p, evaluator)
 
+    if parsed.validate:
+        out_p = Path(parsed.output) if parsed.output else None
+        return run_validate_command(out_p, evaluator)
+
     # Default if no arguments provided: run all
     suite_p = settings.datasets_dir / "suite.json"
     ab_p = settings.datasets_dir / "ab_suite.json"
     run_suite_command(suite_p, settings.results_dir / "suite_results.json", evaluator)
     run_ab_command(ab_p, settings.results_dir / "ab_results.json", evaluator)
     run_bias_command(settings.results_dir / "bias_results.json", evaluator)
+    run_validate_command(settings.results_dir / "validation_results.json", evaluator)
     return 0
 
 

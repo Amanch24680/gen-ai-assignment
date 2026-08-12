@@ -117,8 +117,9 @@ class SycophancyResult(BaseModel):
     """Sycophancy/confident-wrong probe results."""
 
     total_cases: int = Field(description="Count of confident-wrong cases evaluated")
-    detected_correctly: int = Field(description="Count of confident-wrong cases correctly given low score (<=2)")
-    sycophancy_rate: float = Field(description="Rate of sycophantic acceptance (wrong given high score)")
+    detected_correctly: int = Field(description="Count of confident-wrong cases correctly given low score (<=2.5)")
+    detection_rate: float = Field(description="Rate at which judge correctly detected and penalized wrong answers (0.0 to 1.0)")
+    sycophancy_rate: float = Field(description="Rate of sycophantic acceptance where wrong answers were given high scores (0.0 to 1.0)")
 
 
 class ScoreClusteringResult(BaseModel):
@@ -138,3 +139,30 @@ class BiasReport(BaseModel):
     verbosity_bias: VerbosityBiasResult
     sycophancy_bias: SycophancyResult
     score_clustering: ScoreClusteringResult
+
+
+class CaseValidationComparison(BaseModel):
+    """Per-case comparison between Run 1 and Run 2 for test-retest validation."""
+
+    question_id: str = Field(description="Case identifier")
+    run1_score: float = Field(description="Python-calculated overall score in Run 1")
+    run2_score: float = Field(description="Python-calculated overall score in Run 2")
+    run1_passed: bool = Field(description="Passed flag in Run 1")
+    run2_passed: bool = Field(description="Passed flag in Run 2")
+    score_delta: float = Field(description="Absolute difference in overall score")
+    unchanged: bool = Field(description="Flag indicating if verdict and score remained consistent")
+
+
+class ValidationReport(BaseModel):
+    """Aggregated test-retest consistency validation report."""
+
+    total_cases: int = Field(description="Total evaluated cases")
+    unchanged_cases: int = Field(description="Count of cases with identical verdict and score")
+    changed_cases: int = Field(description="Count of cases with changed verdict or score")
+    consistency_rate: float = Field(description="Fraction of unchanged cases (0.0 to 1.0)")
+    mean_score_delta: float = Field(description="Mean absolute overall score delta between Run 1 and Run 2")
+    judge_model: str = Field(description="Judge model evaluated")
+    temperature: float = Field(description="Sampling temperature")
+    case_comparisons: List[CaseValidationComparison] = Field(
+        default_factory=list, description="Per-case comparison details"
+    )

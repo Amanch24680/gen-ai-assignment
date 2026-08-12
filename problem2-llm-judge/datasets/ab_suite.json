@@ -19,9 +19,9 @@
     "id": "ab003",
     "input": "What metrics are used to evaluate retrieval in Problem 1?",
     "system_prompt": "List retrieval evaluation metrics.",
-    "candidate_a_output": "Retrieval is evaluated using Recall@K, Precision@K, Hit Rate@K, nDCG@K, and Mean Reciprocal Rank (MRR).",
-    "candidate_b_output": "Retrieval is evaluated using Recall@K, Precision@K, Hit Rate@K, nDCG@K, and Mean Reciprocal Rank (MRR).",
-    "expected_output": "Recall@K, Precision@K, Hit Rate@K, nDCG@K, and MRR."
+    "candidate_a_output": "Retrieval is evaluated using Recall@k, Hit Rate@k, MRR (Mean Reciprocal Rank), nDCG@k, and Context Precision.",
+    "candidate_b_output": "Retrieval is evaluated using BLEU score, ROUGE-L, and perplexity.",
+    "expected_output": "Recall@k, Hit Rate@k, MRR, nDCG@k, and Context Precision."
   },
   {
     "id": "ab004",

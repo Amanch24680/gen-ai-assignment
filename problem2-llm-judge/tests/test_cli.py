@@ -6,20 +6,23 @@ from app.schemas import (
     ABSuiteReport,
     ABVerdict,
     BiasReport,
+    CaseValidationComparison,
     CriterionScore,
     JudgeVerdict,
     PositionBiasResult,
     ScoreClusteringResult,
     SuiteReport,
     SycophancyResult,
+    ValidationReport,
     VerbosityBiasResult,
 )
 
 
+@patch("app.cli.run_test_retest_validation")
 @patch("app.cli.run_complete_bias_suite")
 @patch("app.evaluator.Evaluator.evaluate_suite")
 @patch("app.evaluator.Evaluator.evaluate_ab_suite")
-def test_cli_all_execution(mock_ab, mock_suite, mock_bias, tmp_path, capsys):
+def test_cli_all_execution(mock_ab, mock_suite, mock_bias, mock_val, tmp_path, capsys):
     mock_suite_report = SuiteReport(
         total_cases=1,
         passed_cases=1,
@@ -50,21 +53,34 @@ def test_cli_all_execution(mock_ab, mock_suite, mock_bias, tmp_path, capsys):
     mock_bias_report = BiasReport(
         position_bias=PositionBiasResult(total_pairs=1, original_winners=["A"], swapped_winners=["A"], flips=0, flip_rate=0.0),
         verbosity_bias=VerbosityBiasResult(normal_mean_score=3.0, verbose_mean_score=4.5, score_delta=1.5, verbosity_biased=True),
-        sycophancy_bias=SycophancyResult(total_cases=1, detected_correctly=1, sycophancy_rate=0.0),
+        sycophancy_bias=SycophancyResult(total_cases=1, detected_correctly=1, detection_rate=1.0, sycophancy_rate=0.0),
         score_clustering=ScoreClusteringResult(min_score=1.0, max_score=5.0, score_std_dev=1.2, score_counts={"1": 1}, is_clustered=False),
+    )
+    mock_val_report = ValidationReport(
+        total_cases=1,
+        unchanged_cases=1,
+        changed_cases=0,
+        consistency_rate=1.0,
+        mean_score_delta=0.0,
+        judge_model="qwen2.5:1.5b-instruct",
+        temperature=0.0,
+        case_comparisons=[],
     )
 
     mock_suite.return_value = mock_suite_report
     mock_ab.return_value = mock_ab_report
     mock_bias.return_value = mock_bias_report
+    mock_val.return_value = mock_val_report
 
-    result = main(["--all"])
-    assert result == 0
+    with patch("app.cli.settings.results_dir", tmp_path):
+        result = main(["--all"])
+        assert result == 0
 
     captured = capsys.readouterr()
     assert "RUNNING LLM-AS-JUDGE SUITE EVALUATION" in captured.out
     assert "RUNNING PAIRWISE A/B COMPARISON EVALUATION" in captured.out
     assert "RUNNING LLM-AS-JUDGE BIAS MEASUREMENT PROBES" in captured.out
+    assert "RUNNING LLM-AS-JUDGE TEST-RETEST CONSISTENCY VALIDATION" in captured.out
 
 
 @patch("app.evaluator.Evaluator.evaluate_suite")

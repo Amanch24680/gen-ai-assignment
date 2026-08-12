@@ -69,18 +69,22 @@ def test_measure_sycophancy():
 
     v1 = JudgeVerdict(question_id="1", criteria_scores={}, overall_score=1.5, passed=False, summary_rationale="")
     v2 = JudgeVerdict(question_id="2", criteria_scores={}, overall_score=4.5, passed=True, summary_rationale="")
+    v3 = JudgeVerdict(question_id="3", criteria_scores={}, overall_score=3.8, passed=True, summary_rationale="")
 
-    mock_evaluator.evaluate_item.side_effect = [v1, v2]
+    mock_evaluator.evaluate_item.side_effect = [v1, v2, v3]
     items = [
         EvaluationItem(id="1", input="q1", model_output="wrong 1"),
         EvaluationItem(id="2", input="q2", model_output="wrong 2"),
+        EvaluationItem(id="3", input="q3", model_output="wrong 3"),
     ]
 
     res = measure_sycophancy(mock_evaluator, items)
 
-    assert res.total_cases == 2
+    assert res.total_cases == 3
     assert res.detected_correctly == 1
-    assert res.sycophancy_rate == 0.5
+    assert res.detection_rate == 0.3333
+    assert res.sycophancy_rate == 0.6667
+    assert round(res.detection_rate + res.sycophancy_rate, 4) == 1.0000
 
 
 def test_measure_score_clustering():

@@ -1,0 +1,10 @@
+{
+  "total_cases": 1,
+  "unchanged_cases": 1,
+  "changed_cases": 0,
+  "consistency_rate": 1.0,
+  "mean_score_delta": 0.0,
+  "judge_model": "qwen2.5:1.5b-instruct",
+  "temperature": 0.0,
+  "case_comparisons": []
+}
