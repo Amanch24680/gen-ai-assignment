@@ -82,9 +82,9 @@ def run_retrieval_evaluation(
     print(f"Recall@3: {summary.recall_at_3:.4f}")
     print(f"Recall@5: {summary.recall_at_5:.4f}\n")
 
-    print(f"Precision@1: {summary.precision_at_1:.4f}")
-    print(f"Precision@3: {summary.precision_at_3:.4f}")
-    print(f"Precision@5: {summary.precision_at_5:.4f}\n")
+    print(f"Precision@1 (Context Precision@1): {summary.precision_at_1:.4f}")
+    print(f"Precision@3 (Context Precision@3): {summary.precision_at_3:.4f}")
+    print(f"Precision@5 (Context Precision@5): {summary.precision_at_5:.4f}\n")
 
     print(f"MRR: {summary.mrr:.4f}\n")
 

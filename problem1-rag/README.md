@@ -166,7 +166,7 @@ The evaluation harness measures retrieval quality and answer generation determin
 ### Evaluation Metrics Defined:
 - **Retrieval Metrics**:
   - **Recall@K**: Proportion of ground-truth relevant chunks present in top-K retrieved results.
-  - **Precision@K**: Proportion of top-K retrieved chunks that belong to ground-truth.
+  - **Precision@K / Context Precision@K**: Proportion of top-K retrieved chunks that belong to the ground-truth relevant chunk set.
   - **Hit Rate@K**: Binary indicator (1.0 if $\ge 1$ relevant chunk is in top-K, else 0.0).
   - **nDCG@K**: Normalized Discounted Cumulative Gain at rank K.
   - **MRR (Mean Reciprocal Rank)**: Mean reciprocal rank ($1 / \text{rank}$) of the first relevant chunk.
@@ -203,9 +203,9 @@ python -m evaluation.cli --mode rag --output evaluation/results.json
 | **Recall@1** | `0.3889` |
 | **Recall@3** | `0.7778` |
 | **Recall@5** | `0.8889` |
-| **Precision@1** | `0.4444` |
-| **Precision@3** | `0.3148` |
-| **Precision@5** | `0.2333` |
+| **Precision@1 (Context Precision@1)** | `0.4444` |
+| **Precision@3 (Context Precision@3)** | `0.3148` |
+| **Precision@5 (Context Precision@5)** | `0.2333` |
 | **Hit Rate@1** | `0.4444` |
 | **Hit Rate@3** | `0.8889` |
 | **Hit Rate@5** | `0.9444` |
